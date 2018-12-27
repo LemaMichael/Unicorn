@@ -120,10 +120,10 @@ bool rightButtonsHidden = false;
         [weakSelf downloadButtonPressed];
     };
     
-    //The share image is an arrow facing to the right, so we can just rotate it downwards and reuse it
-    UIImage* downloadImage = [[[UIImage alloc] initWithCGImage:self.shareButton.aweImageView.image.CGImage scale:1.0 orientation:UIImageOrientationRight] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
-    
-    [self.downloadButton setImage:downloadImage];
+    //The icoLoginArrowNor image is an arrow facing to the right, so we can just rotate it downwards and reuse it
+    UIImage *downloadImage = [[[UIImage alloc] initWithCGImage:[UIImage imageNamed:@"icoLoginArrowNor@3x.png"].CGImage scale:1.5 orientation:UIImageOrientationRight] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+
+    [self.downloadButton setImage: downloadImage];
     self.downloadButton.tintColor = [UIColor whiteColor];
     
     //Ensure that the image view always has the same size as the button
