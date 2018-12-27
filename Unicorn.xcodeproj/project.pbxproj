@@ -11,6 +11,7 @@
 		4C1B84B721D1C56B002B3608 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C1B84B621D1C56B002B3608 /* Foundation.framework */; };
 		4C1B84B921D1C56B002B3608 /* CydiaSubstrate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C1B84B821D1C56B002B3608 /* CydiaSubstrate.framework */; };
 		4C1B84C221D1C56B002B3608 /* Unicorn.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4C1B84C121D1C56B002B3608 /* Unicorn.mm */; };
+		4CE35ED721D1D78900A972E9 /* Photos.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CE35ED621D1D78900A972E9 /* Photos.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -20,9 +21,10 @@
 		4C1B84B821D1C56B002B3608 /* CydiaSubstrate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CydiaSubstrate.framework; path = Library/Frameworks/CydiaSubstrate.framework; sourceTree = DEVELOPER_DIR; };
 		4C1B84BD21D1C56B002B3608 /* control */ = {isa = PBXFileReference; lastKnownFileType = text; name = control; path = Package/DEBIAN/control; sourceTree = "<group>"; };
 		4C1B84BF21D1C56B002B3608 /* Unicorn-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Unicorn-Prefix.pch"; sourceTree = "<group>"; };
-		4C1B84C021D1C56B002B3608 /* Unicorn.xm */ = {isa = PBXFileReference; lastKnownFileType = text; path = Unicorn.xm; sourceTree = "<group>"; };
+		4C1B84C021D1C56B002B3608 /* Unicorn.xm */ = {isa = PBXFileReference; lastKnownFileType = text; path = Unicorn.xm; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		4C1B84C121D1C56B002B3608 /* Unicorn.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = Unicorn.mm; sourceTree = "<group>"; };
 		4C1B84C621D1C56B002B3608 /* Unicorn.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = Unicorn.plist; path = Package/Library/MobileSubstrate/DynamicLibraries/Unicorn.plist; sourceTree = "<group>"; };
+		4CE35ED621D1D78900A972E9 /* Photos.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Photos.framework; path = System/Library/Frameworks/Photos.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -30,6 +32,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4CE35ED721D1D78900A972E9 /* Photos.framework in Frameworks */,
 				4C1B84B521D1C56B002B3608 /* UIKit.framework in Frameworks */,
 				4C1B84B721D1C56B002B3608 /* Foundation.framework in Frameworks */,
 				4C1B84B921D1C56B002B3608 /* CydiaSubstrate.framework in Frameworks */,
@@ -59,6 +62,7 @@
 		4C1B84B321D1C56B002B3608 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				4CE35ED621D1D78900A972E9 /* Photos.framework */,
 				4C1B84B421D1C56B002B3608 /* UIKit.framework */,
 				4C1B84B621D1C56B002B3608 /* Foundation.framework */,
 				4C1B84B821D1C56B002B3608 /* CydiaSubstrate.framework */,
@@ -309,6 +313,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Unicorn/Unicorn-Prefix.pch";
 				INSTALL_PATH = /Library/MobileSubstrate/DynamicLibraries;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				MonkeyDevBuildPackageOnAnyBuild = NO;
 				MonkeyDevClearUiCacheOnInstall = NO;
 				MonkeyDevCopyOnBuild = NO;
@@ -335,6 +340,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Unicorn/Unicorn-Prefix.pch";
 				INSTALL_PATH = /Library/MobileSubstrate/DynamicLibraries;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				MonkeyDevBuildPackageOnAnyBuild = NO;
 				MonkeyDevClearUiCacheOnInstall = NO;
 				MonkeyDevCopyOnBuild = NO;
