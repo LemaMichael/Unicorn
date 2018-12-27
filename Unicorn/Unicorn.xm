@@ -55,7 +55,7 @@ static CGFloat initialConstant = 0;
 
 @interface AWELiveAudienceViewController : AWELiveInteractViewController
 - (void)viewDidLoad;
-- (void)tapAction;
+- (void)handleLongPress:(UILongPressGestureRecognizer*)sender;
 @end
 
 
@@ -253,27 +253,31 @@ bool isChatHidden = false;
     %orig;
     NSLog(@"You’ve entered the live chat.");
     
-    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapAction)];
-    [tap setNumberOfTapsRequired:2];
-    [self.view addGestureRecognizer:tap];
+    UILongPressGestureRecognizer *longPress = [[UILongPressGestureRecognizer alloc]
+                                               initWithTarget:self
+                                               action:@selector(handleLongPress:)];
+    longPress.minimumPressDuration = 1.0;
+    [self.view addGestureRecognizer:longPress];
 }
 
 %new
-- (void)tapAction
+- (void)handleLongPress:(UILongPressGestureRecognizer*)sender
 {
-    NSLog(@"Tap Detected");
-    isChatHidden = !isChatHidden;
-    if (isChatHidden) {
-        //chatView.backgroundColor = [UIColor redColor];
-        chatView.hidden = YES;
-    } else {
-        //controller.messageListView.hidden = NO;
-        //chatView.backgroundColor = [UIColor blackColor];
-        chatView.hidden = NO;
-
+ 
+    if (sender.state == UIGestureRecognizerStateBegan) {
+        NSLog(@"Long press detected.");
+        isChatHidden = !isChatHidden;
+        if (isChatHidden) {
+            //chatView.backgroundColor = [UIColor redColor];
+            chatView.hidden = YES;
+        } else {
+            //controller.messageListView.hidden = NO;
+            //chatView.backgroundColor = [UIColor blackColor];
+            chatView.hidden = NO;
+        }
+    } else if (sender.state == UIGestureRecognizerStateEnded) {
+        NSLog(@"Long press Ended");
     }
-    
-
 }
 %end
 
