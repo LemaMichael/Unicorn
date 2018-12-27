@@ -30,16 +30,23 @@ static CGFloat initialConstant = 0;
 @property(retain, nonatomic) AWEVideoModel* video;
 @end
 
+@interface AWEAdAvatarView : UIView
+@end
+
 @interface AWEAwemePlayInteractionViewController : UIViewController
-@property(retain, nonatomic) AWEFeedVideoButton* likeButton;
-@property(nonatomic, retain) AWEFeedVideoButton* downloadButton; //NEW BUTTON
-@property(retain, nonatomic) AWEFeedVideoButton* shareButton;
-@property(retain, nonatomic) AWEMusicCoverButton* musicButton;
-@property(retain, nonatomic) AWEAwemeModel* model;
+@property(retain, nonatomic) AWEAdAvatarView *userAvatarView;
+@property(retain, nonatomic) AWEFeedVideoButton *likeButton;
+@property(retain, nonatomic) AWEFeedVideoButton *commentButton;
+@property(nonatomic, retain) AWEFeedVideoButton *downloadButton; //NEW BUTTON
+@property(retain, nonatomic) AWEFeedVideoButton *shareButton;
+@property(retain, nonatomic) AWEMusicCoverButton *musicButton;
+@property(retain, nonatomic) AWEAwemeModel *model;
 
 //new
 - (void)downloadButtonPressed;
 - (void)saveMusicalToPhotos;
+- (void)viewDidLoad;
+- (void)handleLongPress:(UILongPressGestureRecognizer*)sender;
 @end
 
 
@@ -60,6 +67,43 @@ static CGFloat initialConstant = 0;
 
 
 %hook AWEAwemePlayInteractionViewController
+bool rightButtonsHidden = false;
+
+- (void)viewDidLoad {
+    %orig;
+    NSLog(@"Welcome to the for you/following page");
+    
+    UILongPressGestureRecognizer *longPress = [[UILongPressGestureRecognizer alloc]
+                                               initWithTarget:self
+                                               action:@selector(handleLongPress:)];
+    longPress.minimumPressDuration = 1.0;
+    [self.view addGestureRecognizer:longPress];
+}
+
+%new
+- (void)handleLongPress:(UILongPressGestureRecognizer*)sender
+{
+    if (sender.state == UIGestureRecognizerStateBegan) {
+        NSLog(@"Long press detected.");
+        rightButtonsHidden = !rightButtonsHidden;
+        if (rightButtonsHidden) {
+            self.userAvatarView.hidden = YES;
+            self.likeButton.hidden = YES;
+            self.commentButton.hidden = YES;
+            self.shareButton.hidden = YES;
+            self.downloadButton.hidden = YES;
+        } else {
+            self.userAvatarView.hidden = NO;
+            self.likeButton.hidden = NO;
+            self.commentButton.hidden = NO;
+            self.shareButton.hidden = NO;
+            self.downloadButton.hidden = NO;
+        }
+    } else if (sender.state == UIGestureRecognizerStateEnded) {
+        NSLog(@"Long press Ended");
+    }
+}
+
 
 %property(nonatomic, retain) AWEFeedVideoButton *downloadButton;
 
@@ -263,7 +307,6 @@ bool isChatHidden = false;
 %new
 - (void)handleLongPress:(UILongPressGestureRecognizer*)sender
 {
- 
     if (sender.state == UIGestureRecognizerStateBegan) {
         NSLog(@"Long press detected.");
         isChatHidden = !isChatHidden;

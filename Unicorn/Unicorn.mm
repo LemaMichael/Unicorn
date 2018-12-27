@@ -31,16 +31,24 @@ static CGFloat initialConstant = 0;
 @property(retain, nonatomic) AWEVideoModel* video;
 @end
 
+@interface AWEAdAvatarView : UIView
+@end
+
 @interface AWEAwemePlayInteractionViewController : UIViewController
-@property(retain, nonatomic) AWEFeedVideoButton* likeButton;
-@property(nonatomic, retain) AWEFeedVideoButton* downloadButton; 
-@property(retain, nonatomic) AWEFeedVideoButton* shareButton;
-@property(retain, nonatomic) AWEMusicCoverButton* musicButton;
-@property(retain, nonatomic) AWEAwemeModel* model;
+@property(retain, nonatomic) AWEAdAvatarView *userAvatarView;
+@property(retain, nonatomic) AWEFeedVideoButton *likeButton;
+@property(retain, nonatomic) AWEFeedVideoButton *commentButton;
+@property(nonatomic, retain) AWEFeedVideoButton *downloadButton; 
+@property(retain, nonatomic) AWEFeedVideoButton *shareButton;
+@property(retain, nonatomic) AWEMusicCoverButton *musicButton;
+@property(retain, nonatomic) AWEAwemeModel *model;
 
 
 - (void)downloadButtonPressed;
 - (void)saveMusicalToPhotos;
+- (void)viewDidLoad;
+- (void)handleLongPress:(UILongPressGestureRecognizer*)sender;
+
 @end
 
 
@@ -81,10 +89,47 @@ static CGFloat initialConstant = 0;
 #define _LOGOS_RETURN_RETAINED
 #endif
 
-@class AWEFeedVideoButton; @class AWEAwemePlayInteractionViewController; @class AWELiveChatMessageViewController; @class AWELiveAudienceViewController; 
-static AWEAwemePlayInteractionViewController* (*_logos_orig$_ungrouped$AWEAwemePlayInteractionViewController$initWithMediaType$)(_LOGOS_SELF_TYPE_INIT AWEAwemePlayInteractionViewController*, SEL, NSInteger) _LOGOS_RETURN_RETAINED; static AWEAwemePlayInteractionViewController* _logos_method$_ungrouped$AWEAwemePlayInteractionViewController$initWithMediaType$(_LOGOS_SELF_TYPE_INIT AWEAwemePlayInteractionViewController*, SEL, NSInteger) _LOGOS_RETURN_RETAINED; static void (*_logos_orig$_ungrouped$AWEAwemePlayInteractionViewController$updateAllSubViews)(_LOGOS_SELF_TYPE_NORMAL AWEAwemePlayInteractionViewController* _LOGOS_SELF_CONST, SEL); static void _logos_method$_ungrouped$AWEAwemePlayInteractionViewController$updateAllSubViews(_LOGOS_SELF_TYPE_NORMAL AWEAwemePlayInteractionViewController* _LOGOS_SELF_CONST, SEL); static void _logos_method$_ungrouped$AWEAwemePlayInteractionViewController$downloadButtonPressed(_LOGOS_SELF_TYPE_NORMAL AWEAwemePlayInteractionViewController* _LOGOS_SELF_CONST, SEL); static void _logos_method$_ungrouped$AWEAwemePlayInteractionViewController$saveMusicalToPhotos(_LOGOS_SELF_TYPE_NORMAL AWEAwemePlayInteractionViewController* _LOGOS_SELF_CONST, SEL); static void (*_logos_orig$_ungrouped$AWELiveAudienceViewController$viewDidLoad)(_LOGOS_SELF_TYPE_NORMAL AWELiveAudienceViewController* _LOGOS_SELF_CONST, SEL); static void _logos_method$_ungrouped$AWELiveAudienceViewController$viewDidLoad(_LOGOS_SELF_TYPE_NORMAL AWELiveAudienceViewController* _LOGOS_SELF_CONST, SEL); static void _logos_method$_ungrouped$AWELiveAudienceViewController$handleLongPress$(_LOGOS_SELF_TYPE_NORMAL AWELiveAudienceViewController* _LOGOS_SELF_CONST, SEL, UILongPressGestureRecognizer*); static void (*_logos_orig$_ungrouped$AWELiveChatMessageViewController$viewDidLoad)(_LOGOS_SELF_TYPE_NORMAL AWELiveChatMessageViewController* _LOGOS_SELF_CONST, SEL); static void _logos_method$_ungrouped$AWELiveChatMessageViewController$viewDidLoad(_LOGOS_SELF_TYPE_NORMAL AWELiveChatMessageViewController* _LOGOS_SELF_CONST, SEL); 
+@class AWEAwemePlayInteractionViewController; @class AWEFeedVideoButton; @class AWELiveAudienceViewController; @class AWELiveChatMessageViewController; 
+static void (*_logos_orig$_ungrouped$AWEAwemePlayInteractionViewController$viewDidLoad)(_LOGOS_SELF_TYPE_NORMAL AWEAwemePlayInteractionViewController* _LOGOS_SELF_CONST, SEL); static void _logos_method$_ungrouped$AWEAwemePlayInteractionViewController$viewDidLoad(_LOGOS_SELF_TYPE_NORMAL AWEAwemePlayInteractionViewController* _LOGOS_SELF_CONST, SEL); static void _logos_method$_ungrouped$AWEAwemePlayInteractionViewController$handleLongPress$(_LOGOS_SELF_TYPE_NORMAL AWEAwemePlayInteractionViewController* _LOGOS_SELF_CONST, SEL, UILongPressGestureRecognizer*); static AWEAwemePlayInteractionViewController* (*_logos_orig$_ungrouped$AWEAwemePlayInteractionViewController$initWithMediaType$)(_LOGOS_SELF_TYPE_INIT AWEAwemePlayInteractionViewController*, SEL, NSInteger) _LOGOS_RETURN_RETAINED; static AWEAwemePlayInteractionViewController* _logos_method$_ungrouped$AWEAwemePlayInteractionViewController$initWithMediaType$(_LOGOS_SELF_TYPE_INIT AWEAwemePlayInteractionViewController*, SEL, NSInteger) _LOGOS_RETURN_RETAINED; static void (*_logos_orig$_ungrouped$AWEAwemePlayInteractionViewController$updateAllSubViews)(_LOGOS_SELF_TYPE_NORMAL AWEAwemePlayInteractionViewController* _LOGOS_SELF_CONST, SEL); static void _logos_method$_ungrouped$AWEAwemePlayInteractionViewController$updateAllSubViews(_LOGOS_SELF_TYPE_NORMAL AWEAwemePlayInteractionViewController* _LOGOS_SELF_CONST, SEL); static void _logos_method$_ungrouped$AWEAwemePlayInteractionViewController$downloadButtonPressed(_LOGOS_SELF_TYPE_NORMAL AWEAwemePlayInteractionViewController* _LOGOS_SELF_CONST, SEL); static void _logos_method$_ungrouped$AWEAwemePlayInteractionViewController$saveMusicalToPhotos(_LOGOS_SELF_TYPE_NORMAL AWEAwemePlayInteractionViewController* _LOGOS_SELF_CONST, SEL); static void (*_logos_orig$_ungrouped$AWELiveAudienceViewController$viewDidLoad)(_LOGOS_SELF_TYPE_NORMAL AWELiveAudienceViewController* _LOGOS_SELF_CONST, SEL); static void _logos_method$_ungrouped$AWELiveAudienceViewController$viewDidLoad(_LOGOS_SELF_TYPE_NORMAL AWELiveAudienceViewController* _LOGOS_SELF_CONST, SEL); static void _logos_method$_ungrouped$AWELiveAudienceViewController$handleLongPress$(_LOGOS_SELF_TYPE_NORMAL AWELiveAudienceViewController* _LOGOS_SELF_CONST, SEL, UILongPressGestureRecognizer*); static void (*_logos_orig$_ungrouped$AWELiveChatMessageViewController$viewDidLoad)(_LOGOS_SELF_TYPE_NORMAL AWELiveChatMessageViewController* _LOGOS_SELF_CONST, SEL); static void _logos_method$_ungrouped$AWELiveChatMessageViewController$viewDidLoad(_LOGOS_SELF_TYPE_NORMAL AWELiveChatMessageViewController* _LOGOS_SELF_CONST, SEL); 
 static __inline__ __attribute__((always_inline)) __attribute__((unused)) Class _logos_static_class_lookup$AWEFeedVideoButton(void) { static Class _klass; if(!_klass) { _klass = objc_getClass("AWEFeedVideoButton"); } return _klass; }
-#line 62 "/Users/michael/Unicorn/Unicorn/Unicorn.xm"
+#line 70 "/Users/michael/Unicorn/Unicorn/Unicorn.xm"
+
+bool rightButtonsHidden = false;
+
+static void _logos_method$_ungrouped$AWEAwemePlayInteractionViewController$viewDidLoad(_LOGOS_SELF_TYPE_NORMAL AWEAwemePlayInteractionViewController* _LOGOS_SELF_CONST __unused self, SEL __unused _cmd) {
+    _logos_orig$_ungrouped$AWEAwemePlayInteractionViewController$viewDidLoad(self, _cmd);
+    NSLog(@"Welcome to the for you/following page");
+    
+    UILongPressGestureRecognizer *longPress = [[UILongPressGestureRecognizer alloc]
+                                               initWithTarget:self
+                                               action:@selector(handleLongPress:)];
+    longPress.minimumPressDuration = 1.0;
+    [self.view addGestureRecognizer:longPress];
+}
+
+
+
+static void _logos_method$_ungrouped$AWEAwemePlayInteractionViewController$handleLongPress$(_LOGOS_SELF_TYPE_NORMAL AWEAwemePlayInteractionViewController* _LOGOS_SELF_CONST __unused self, SEL __unused _cmd, UILongPressGestureRecognizer* sender) {
+    if (sender.state == UIGestureRecognizerStateBegan) {
+        NSLog(@"Long press detected.");
+        rightButtonsHidden = !rightButtonsHidden;
+        if (rightButtonsHidden) {
+            self.userAvatarView.hidden = YES;
+            self.likeButton.hidden = YES;
+            self.commentButton.hidden = YES;
+            self.shareButton.hidden = YES;
+            self.downloadButton.hidden = YES;
+        } else {
+            self.userAvatarView.hidden = NO;
+            self.likeButton.hidden = NO;
+            self.commentButton.hidden = NO;
+            self.shareButton.hidden = NO;
+            self.downloadButton.hidden = NO;
+        }
+    } else if (sender.state == UIGestureRecognizerStateEnded) {
+        NSLog(@"Long press Ended");
+    }
+}
 
 
 static char _logos_property_key$_ungrouped$AWEAwemePlayInteractionViewController$downloadButton;__attribute__((used)) static AWEFeedVideoButton * _logos_method$_ungrouped$AWEAwemePlayInteractionViewController$downloadButton$(AWEAwemePlayInteractionViewController* __unused self, SEL __unused _cmd){ return objc_getAssociatedObject(self, &_logos_property_key$_ungrouped$AWEAwemePlayInteractionViewController$downloadButton); }__attribute__((used)) static void _logos_method$_ungrouped$AWEAwemePlayInteractionViewController$setDownloadButton$(AWEAwemePlayInteractionViewController* __unused self, SEL __unused _cmd, AWEFeedVideoButton * arg){ objc_setAssociatedObject(self, &_logos_property_key$_ungrouped$AWEAwemePlayInteractionViewController$downloadButton, arg, OBJC_ASSOCIATION_RETAIN_NONATOMIC); }
@@ -289,7 +334,6 @@ static void _logos_method$_ungrouped$AWELiveAudienceViewController$viewDidLoad(_
 
 
 static void _logos_method$_ungrouped$AWELiveAudienceViewController$handleLongPress$(_LOGOS_SELF_TYPE_NORMAL AWELiveAudienceViewController* _LOGOS_SELF_CONST __unused self, SEL __unused _cmd, UILongPressGestureRecognizer* sender) {
- 
     if (sender.state == UIGestureRecognizerStateBegan) {
         NSLog(@"Long press detected.");
         isChatHidden = !isChatHidden;
@@ -317,5 +361,5 @@ static void _logos_method$_ungrouped$AWELiveChatMessageViewController$viewDidLoa
 
 
 static __attribute__((constructor)) void _logosLocalInit() {
-{Class _logos_class$_ungrouped$AWEAwemePlayInteractionViewController = objc_getClass("AWEAwemePlayInteractionViewController"); MSHookMessageEx(_logos_class$_ungrouped$AWEAwemePlayInteractionViewController, @selector(initWithMediaType:), (IMP)&_logos_method$_ungrouped$AWEAwemePlayInteractionViewController$initWithMediaType$, (IMP*)&_logos_orig$_ungrouped$AWEAwemePlayInteractionViewController$initWithMediaType$);MSHookMessageEx(_logos_class$_ungrouped$AWEAwemePlayInteractionViewController, @selector(updateAllSubViews), (IMP)&_logos_method$_ungrouped$AWEAwemePlayInteractionViewController$updateAllSubViews, (IMP*)&_logos_orig$_ungrouped$AWEAwemePlayInteractionViewController$updateAllSubViews);{ char _typeEncoding[1024]; unsigned int i = 0; _typeEncoding[i] = 'v'; i += 1; _typeEncoding[i] = '@'; i += 1; _typeEncoding[i] = ':'; i += 1; _typeEncoding[i] = '\0'; class_addMethod(_logos_class$_ungrouped$AWEAwemePlayInteractionViewController, @selector(downloadButtonPressed), (IMP)&_logos_method$_ungrouped$AWEAwemePlayInteractionViewController$downloadButtonPressed, _typeEncoding); }{ char _typeEncoding[1024]; unsigned int i = 0; _typeEncoding[i] = 'v'; i += 1; _typeEncoding[i] = '@'; i += 1; _typeEncoding[i] = ':'; i += 1; _typeEncoding[i] = '\0'; class_addMethod(_logos_class$_ungrouped$AWEAwemePlayInteractionViewController, @selector(saveMusicalToPhotos), (IMP)&_logos_method$_ungrouped$AWEAwemePlayInteractionViewController$saveMusicalToPhotos, _typeEncoding); }{ class_addMethod(_logos_class$_ungrouped$AWEAwemePlayInteractionViewController, @selector(downloadButton), (IMP)&_logos_method$_ungrouped$AWEAwemePlayInteractionViewController$downloadButton$, [[NSString stringWithFormat:@"%s@:", @encode(AWEFeedVideoButton *)] UTF8String]);class_addMethod(_logos_class$_ungrouped$AWEAwemePlayInteractionViewController, @selector(setDownloadButton:), (IMP)&_logos_method$_ungrouped$AWEAwemePlayInteractionViewController$setDownloadButton$, [[NSString stringWithFormat:@"v@:%s", @encode(AWEFeedVideoButton *)] UTF8String]);} Class _logos_class$_ungrouped$AWELiveAudienceViewController = objc_getClass("AWELiveAudienceViewController"); MSHookMessageEx(_logos_class$_ungrouped$AWELiveAudienceViewController, @selector(viewDidLoad), (IMP)&_logos_method$_ungrouped$AWELiveAudienceViewController$viewDidLoad, (IMP*)&_logos_orig$_ungrouped$AWELiveAudienceViewController$viewDidLoad);{ char _typeEncoding[1024]; unsigned int i = 0; _typeEncoding[i] = 'v'; i += 1; _typeEncoding[i] = '@'; i += 1; _typeEncoding[i] = ':'; i += 1; memcpy(_typeEncoding + i, @encode(UILongPressGestureRecognizer*), strlen(@encode(UILongPressGestureRecognizer*))); i += strlen(@encode(UILongPressGestureRecognizer*)); _typeEncoding[i] = '\0'; class_addMethod(_logos_class$_ungrouped$AWELiveAudienceViewController, @selector(handleLongPress:), (IMP)&_logos_method$_ungrouped$AWELiveAudienceViewController$handleLongPress$, _typeEncoding); }Class _logos_class$_ungrouped$AWELiveChatMessageViewController = objc_getClass("AWELiveChatMessageViewController"); MSHookMessageEx(_logos_class$_ungrouped$AWELiveChatMessageViewController, @selector(viewDidLoad), (IMP)&_logos_method$_ungrouped$AWELiveChatMessageViewController$viewDidLoad, (IMP*)&_logos_orig$_ungrouped$AWELiveChatMessageViewController$viewDidLoad);} }
-#line 293 "/Users/michael/Unicorn/Unicorn/Unicorn.xm"
+{Class _logos_class$_ungrouped$AWEAwemePlayInteractionViewController = objc_getClass("AWEAwemePlayInteractionViewController"); MSHookMessageEx(_logos_class$_ungrouped$AWEAwemePlayInteractionViewController, @selector(viewDidLoad), (IMP)&_logos_method$_ungrouped$AWEAwemePlayInteractionViewController$viewDidLoad, (IMP*)&_logos_orig$_ungrouped$AWEAwemePlayInteractionViewController$viewDidLoad);{ char _typeEncoding[1024]; unsigned int i = 0; _typeEncoding[i] = 'v'; i += 1; _typeEncoding[i] = '@'; i += 1; _typeEncoding[i] = ':'; i += 1; memcpy(_typeEncoding + i, @encode(UILongPressGestureRecognizer*), strlen(@encode(UILongPressGestureRecognizer*))); i += strlen(@encode(UILongPressGestureRecognizer*)); _typeEncoding[i] = '\0'; class_addMethod(_logos_class$_ungrouped$AWEAwemePlayInteractionViewController, @selector(handleLongPress:), (IMP)&_logos_method$_ungrouped$AWEAwemePlayInteractionViewController$handleLongPress$, _typeEncoding); }MSHookMessageEx(_logos_class$_ungrouped$AWEAwemePlayInteractionViewController, @selector(initWithMediaType:), (IMP)&_logos_method$_ungrouped$AWEAwemePlayInteractionViewController$initWithMediaType$, (IMP*)&_logos_orig$_ungrouped$AWEAwemePlayInteractionViewController$initWithMediaType$);MSHookMessageEx(_logos_class$_ungrouped$AWEAwemePlayInteractionViewController, @selector(updateAllSubViews), (IMP)&_logos_method$_ungrouped$AWEAwemePlayInteractionViewController$updateAllSubViews, (IMP*)&_logos_orig$_ungrouped$AWEAwemePlayInteractionViewController$updateAllSubViews);{ char _typeEncoding[1024]; unsigned int i = 0; _typeEncoding[i] = 'v'; i += 1; _typeEncoding[i] = '@'; i += 1; _typeEncoding[i] = ':'; i += 1; _typeEncoding[i] = '\0'; class_addMethod(_logos_class$_ungrouped$AWEAwemePlayInteractionViewController, @selector(downloadButtonPressed), (IMP)&_logos_method$_ungrouped$AWEAwemePlayInteractionViewController$downloadButtonPressed, _typeEncoding); }{ char _typeEncoding[1024]; unsigned int i = 0; _typeEncoding[i] = 'v'; i += 1; _typeEncoding[i] = '@'; i += 1; _typeEncoding[i] = ':'; i += 1; _typeEncoding[i] = '\0'; class_addMethod(_logos_class$_ungrouped$AWEAwemePlayInteractionViewController, @selector(saveMusicalToPhotos), (IMP)&_logos_method$_ungrouped$AWEAwemePlayInteractionViewController$saveMusicalToPhotos, _typeEncoding); }{ class_addMethod(_logos_class$_ungrouped$AWEAwemePlayInteractionViewController, @selector(downloadButton), (IMP)&_logos_method$_ungrouped$AWEAwemePlayInteractionViewController$downloadButton$, [[NSString stringWithFormat:@"%s@:", @encode(AWEFeedVideoButton *)] UTF8String]);class_addMethod(_logos_class$_ungrouped$AWEAwemePlayInteractionViewController, @selector(setDownloadButton:), (IMP)&_logos_method$_ungrouped$AWEAwemePlayInteractionViewController$setDownloadButton$, [[NSString stringWithFormat:@"v@:%s", @encode(AWEFeedVideoButton *)] UTF8String]);} Class _logos_class$_ungrouped$AWELiveAudienceViewController = objc_getClass("AWELiveAudienceViewController"); MSHookMessageEx(_logos_class$_ungrouped$AWELiveAudienceViewController, @selector(viewDidLoad), (IMP)&_logos_method$_ungrouped$AWELiveAudienceViewController$viewDidLoad, (IMP*)&_logos_orig$_ungrouped$AWELiveAudienceViewController$viewDidLoad);{ char _typeEncoding[1024]; unsigned int i = 0; _typeEncoding[i] = 'v'; i += 1; _typeEncoding[i] = '@'; i += 1; _typeEncoding[i] = ':'; i += 1; memcpy(_typeEncoding + i, @encode(UILongPressGestureRecognizer*), strlen(@encode(UILongPressGestureRecognizer*))); i += strlen(@encode(UILongPressGestureRecognizer*)); _typeEncoding[i] = '\0'; class_addMethod(_logos_class$_ungrouped$AWELiveAudienceViewController, @selector(handleLongPress:), (IMP)&_logos_method$_ungrouped$AWELiveAudienceViewController$handleLongPress$, _typeEncoding); }Class _logos_class$_ungrouped$AWELiveChatMessageViewController = objc_getClass("AWELiveChatMessageViewController"); MSHookMessageEx(_logos_class$_ungrouped$AWELiveChatMessageViewController, @selector(viewDidLoad), (IMP)&_logos_method$_ungrouped$AWELiveChatMessageViewController$viewDidLoad, (IMP*)&_logos_orig$_ungrouped$AWELiveChatMessageViewController$viewDidLoad);} }
+#line 337 "/Users/michael/Unicorn/Unicorn/Unicorn.xm"
