@@ -46,6 +46,7 @@ static CGFloat initialConstant = 0;
 //: NEW
 // This contains the message UITableView and AWELiveMessageListCellView
 @interface AWELiveChatMessageViewController: UIViewController
+@property(retain, nonatomic) UITableView *messageListView;
 - (void)viewDidLoad;
 @end
 
@@ -243,8 +244,11 @@ static CGFloat initialConstant = 0;
 %end
 
 
+UIView *chatView;
 
 %hook AWELiveAudienceViewController
+bool isChatHidden = false;
+
 - (void)viewDidLoad {
     %orig;
     NSLog(@"You’ve entered the live chat.");
@@ -258,6 +262,27 @@ static CGFloat initialConstant = 0;
 - (void)tapAction
 {
     NSLog(@"Tap Detected");
+    isChatHidden = !isChatHidden;
+    if (isChatHidden) {
+        //chatView.backgroundColor = [UIColor redColor];
+        chatView.hidden = YES;
+    } else {
+        //controller.messageListView.hidden = NO;
+        //chatView.backgroundColor = [UIColor blackColor];
+        chatView.hidden = NO;
+
+    }
+    
 
 }
 %end
+
+
+%hook AWELiveChatMessageViewController
+- (void)viewDidLoad {
+    %orig;
+    chatView = self.view;
+}
+%end
+
+
