@@ -42,6 +42,22 @@ static CGFloat initialConstant = 0;
 - (void)saveMusicalToPhotos;
 @end
 
+
+//: NEW
+// This contains the message UITableView and AWELiveMessageListCellView
+@interface AWELiveChatMessageViewController: UIViewController
+- (void)viewDidLoad;
+@end
+
+@interface AWELiveInteractViewController : UIViewController
+@end
+
+@interface AWELiveAudienceViewController : AWELiveInteractViewController
+- (void)viewDidLoad;
+- (void)tapAction;
+@end
+
+
 %hook AWEAwemePlayInteractionViewController
 
 %property(nonatomic, retain) AWEFeedVideoButton *downloadButton;
@@ -224,5 +240,24 @@ static CGFloat initialConstant = 0;
     //Start download
     [musicalDownloadTask resume];
 }
+%end
 
+
+
+%hook AWELiveAudienceViewController
+- (void)viewDidLoad {
+    %orig;
+    NSLog(@"You’ve entered the live chat.");
+    
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapAction)];
+    [tap setNumberOfTapsRequired:2];
+    [self.view addGestureRecognizer:tap];
+}
+
+%new
+- (void)tapAction
+{
+    NSLog(@"Tap Detected");
+
+}
 %end
