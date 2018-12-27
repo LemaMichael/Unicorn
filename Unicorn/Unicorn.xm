@@ -1,6 +1,6 @@
 #import <Photos/Photos.h>
 
-static UIColor* successColor = [UIColor colorWithRed:0.2 green:0.7 blue:0.15 alpha:1];
+static UIColor* successColor = [UIColor colorWithRed:0.13 green:0.55 blue:0.13 alpha:1.0];
 static CGFloat initialConstant = 0;
 
 @interface AWEButton : UIButton
@@ -121,7 +121,7 @@ bool rightButtonsHidden = false;
     };
     
     //The icoLoginArrowNor image is an arrow facing to the right, so we can just rotate it downwards and reuse it
-    UIImage *downloadImage = [[[UIImage alloc] initWithCGImage:[UIImage imageNamed:@"icoLoginArrowNor@3x.png"].CGImage scale:1.5 orientation:UIImageOrientationRight] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+    UIImage *downloadImage = [[[UIImage alloc] initWithCGImage:[UIImage imageNamed:@"icoLoginArrowNor@3x.png"].CGImage scale:1 orientation:UIImageOrientationRight] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
 
     [self.downloadButton setImage: downloadImage];
     self.downloadButton.tintColor = [UIColor whiteColor];
@@ -179,8 +179,8 @@ bool rightButtonsHidden = false;
         
         //Add constraints for download button
         NSDictionary* views = @{@"downloadButton" : self.downloadButton, @"shareButton" : self.shareButton};
-        [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[shareButton]-10-[downloadButton(38)]" options:0 metrics:nil views:views]];
-        [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:[downloadButton(40)]-10.6666-|" options:0 metrics:nil views:views]];
+        [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[shareButton]-10-[downloadButton(44)]" options:0 metrics:nil views:views]];
+        [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:[downloadButton(44)]-10.6666-|" options:0 metrics:nil views:views]];
     }
 }
 
