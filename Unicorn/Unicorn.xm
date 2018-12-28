@@ -354,10 +354,10 @@ UIButton *downloadImageButton;
     UIImage *downloadImage = [[[UIImage alloc] initWithCGImage:[UIImage imageNamed:@"icoLoginArrowNor@3x.png"].CGImage scale:1 orientation:UIImageOrientationRight] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
     
     [downloadImageButton setBackgroundImage:downloadImage forState:UIControlStateNormal];
-    downloadImageButton.tintColor = [UIColor blackColor];
-
-    downloadImageButton.frame = CGRectMake(82.0, 205.0, 42.0, 42.0);
-    [self addSubview:downloadImageButton];
+    downloadImageButton.tintColor = [UIColor whiteColor];
+    
+    downloadImageButton.frame = CGRectMake(0, 114, 44, 44);
+    [self addSubview: downloadImageButton];
 }
 
 %new
@@ -374,7 +374,6 @@ UIButton *downloadImageButton;
         }
         else {
             NSLog(@"error saving to photos: %@", error);
-
         }
     }];
 }

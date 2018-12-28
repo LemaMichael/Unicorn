@@ -65,7 +65,7 @@ static CGFloat initialConstant = 0;
 @end
 
 @interface AWEProfileImagePreviewView : UIView
-@property(retain, nonatomic) YYAnimatedImageView *avatar; 
+@property(retain, nonatomic) YYAnimatedImageView *avatar;
 - (void)setupUI;
 - (void)downloadImageButtonPressed:(UIButton*)button; 
 @end
@@ -92,7 +92,7 @@ static CGFloat initialConstant = 0;
 #define _LOGOS_RETURN_RETAINED
 #endif
 
-@class AWEAwemePlayInteractionViewController; @class AWEProfileImagePreviewView; @class AWELiveAudienceViewController; @class AWEFeedVideoButton; 
+@class AWEAwemePlayInteractionViewController; @class AWELiveAudienceViewController; @class AWEFeedVideoButton; @class AWEProfileImagePreviewView; 
 static void (*_logos_orig$_ungrouped$AWEAwemePlayInteractionViewController$viewDidLoad)(_LOGOS_SELF_TYPE_NORMAL AWEAwemePlayInteractionViewController* _LOGOS_SELF_CONST, SEL); static void _logos_method$_ungrouped$AWEAwemePlayInteractionViewController$viewDidLoad(_LOGOS_SELF_TYPE_NORMAL AWEAwemePlayInteractionViewController* _LOGOS_SELF_CONST, SEL); static void _logos_method$_ungrouped$AWEAwemePlayInteractionViewController$handleLongPress$(_LOGOS_SELF_TYPE_NORMAL AWEAwemePlayInteractionViewController* _LOGOS_SELF_CONST, SEL, UILongPressGestureRecognizer*); static AWEAwemePlayInteractionViewController* (*_logos_orig$_ungrouped$AWEAwemePlayInteractionViewController$initWithMediaType$)(_LOGOS_SELF_TYPE_INIT AWEAwemePlayInteractionViewController*, SEL, NSInteger) _LOGOS_RETURN_RETAINED; static AWEAwemePlayInteractionViewController* _logos_method$_ungrouped$AWEAwemePlayInteractionViewController$initWithMediaType$(_LOGOS_SELF_TYPE_INIT AWEAwemePlayInteractionViewController*, SEL, NSInteger) _LOGOS_RETURN_RETAINED; static void (*_logos_orig$_ungrouped$AWEAwemePlayInteractionViewController$updateAllSubViews)(_LOGOS_SELF_TYPE_NORMAL AWEAwemePlayInteractionViewController* _LOGOS_SELF_CONST, SEL); static void _logos_method$_ungrouped$AWEAwemePlayInteractionViewController$updateAllSubViews(_LOGOS_SELF_TYPE_NORMAL AWEAwemePlayInteractionViewController* _LOGOS_SELF_CONST, SEL); static void _logos_method$_ungrouped$AWEAwemePlayInteractionViewController$downloadButtonPressed(_LOGOS_SELF_TYPE_NORMAL AWEAwemePlayInteractionViewController* _LOGOS_SELF_CONST, SEL); static void _logos_method$_ungrouped$AWEAwemePlayInteractionViewController$saveMusicalToPhotos(_LOGOS_SELF_TYPE_NORMAL AWEAwemePlayInteractionViewController* _LOGOS_SELF_CONST, SEL); static void _logos_method$_ungrouped$AWELiveAudienceViewController$listSubviewsOfView$(_LOGOS_SELF_TYPE_NORMAL AWELiveAudienceViewController* _LOGOS_SELF_CONST, SEL, UIView *); static void _logos_method$_ungrouped$AWELiveAudienceViewController$handleLongPress$(_LOGOS_SELF_TYPE_NORMAL AWELiveAudienceViewController* _LOGOS_SELF_CONST, SEL, UILongPressGestureRecognizer*); static void (*_logos_orig$_ungrouped$AWELiveAudienceViewController$viewDidLoad)(_LOGOS_SELF_TYPE_NORMAL AWELiveAudienceViewController* _LOGOS_SELF_CONST, SEL); static void _logos_method$_ungrouped$AWELiveAudienceViewController$viewDidLoad(_LOGOS_SELF_TYPE_NORMAL AWELiveAudienceViewController* _LOGOS_SELF_CONST, SEL); static void (*_logos_orig$_ungrouped$AWEProfileImagePreviewView$setupUI)(_LOGOS_SELF_TYPE_NORMAL AWEProfileImagePreviewView* _LOGOS_SELF_CONST, SEL); static void _logos_method$_ungrouped$AWEProfileImagePreviewView$setupUI(_LOGOS_SELF_TYPE_NORMAL AWEProfileImagePreviewView* _LOGOS_SELF_CONST, SEL); static void _logos_method$_ungrouped$AWEProfileImagePreviewView$downloadImageButtonPressed$(_LOGOS_SELF_TYPE_NORMAL AWEProfileImagePreviewView* _LOGOS_SELF_CONST, SEL, UIButton*); 
 static __inline__ __attribute__((always_inline)) __attribute__((unused)) Class _logos_static_class_lookup$AWEFeedVideoButton(void) { static Class _klass; if(!_klass) { _klass = objc_getClass("AWEFeedVideoButton"); } return _klass; }
 #line 73 "/Users/michael/Unicorn/Unicorn/Unicorn.xm"
@@ -374,17 +374,16 @@ static void _logos_method$_ungrouped$AWELiveAudienceViewController$viewDidLoad(_
 UIButton *downloadImageButton;
 static void _logos_method$_ungrouped$AWEProfileImagePreviewView$setupUI(_LOGOS_SELF_TYPE_NORMAL AWEProfileImagePreviewView* _LOGOS_SELF_CONST __unused self, SEL __unused _cmd) {
     _logos_orig$_ungrouped$AWEProfileImagePreviewView$setupUI(self, _cmd);
-    NSLog(@"SetupUI");
     downloadImageButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [downloadImageButton addTarget:self action:@selector(downloadImageButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
 
     UIImage *downloadImage = [[[UIImage alloc] initWithCGImage:[UIImage imageNamed:@"icoLoginArrowNor@3x.png"].CGImage scale:1 orientation:UIImageOrientationRight] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
     
     [downloadImageButton setBackgroundImage:downloadImage forState:UIControlStateNormal];
-    downloadImageButton.tintColor = [UIColor blackColor];
-
-    downloadImageButton.frame = CGRectMake(80.0, 210.0, 42.0, 42.0);
-    [self addSubview:downloadImageButton];
+    downloadImageButton.tintColor = [UIColor whiteColor];
+    
+    downloadImageButton.frame = CGRectMake(0, 114, 44, 44);
+    [self addSubview: downloadImageButton];
 }
 
 
@@ -398,10 +397,11 @@ static void _logos_method$_ungrouped$AWEProfileImagePreviewView$downloadImageBut
     } completionHandler:^(BOOL success, NSError *error) {
         if (success) {
             NSLog(@"successfully saved");
+            [self setNeedsDisplay];
+            downloadImageButton.tintColor = successColor;
         }
         else {
             NSLog(@"error saving to photos: %@", error);
-
         }
     }];
 }
