@@ -63,24 +63,10 @@ static CGFloat initialConstant = 0;
 @interface YYAnimatedImageView : UIImageView
 @end
 
-@interface AWEUserDetailHeaderView : UIView
-@property(retain, nonatomic) YYAnimatedImageView *avatarView;
-@end
-
-@interface AWEUserDetailViewController : UIViewController
-@property(retain, nonatomic) AWEUserDetailHeaderView *headerView;
-
-- (void)viewDidLoad;
-
-// NEW
-- (void)downloadImageButtonPressed:(UILongPressGestureRecognizer*)sender;
-@end
-
-
-// HM
 @interface AWEProfileImagePreviewView : UIView
-@property(retain, nonatomic) YYAnimatedImageView *avatar; // @synthesize avatar=_avatar;
-//@property(retain, nonatomic) AWEAnimatedButton *changeButton; // @synthesize changeButton=_changeButton;
+@property(retain, nonatomic) YYAnimatedImageView *avatar;
+- (void)setupUI;
+- (void)downloadImageButtonPressed:(UIButton*)button; //NEW
 @end
 
 
@@ -358,42 +344,39 @@ int viewCounter = 0;
 %end
 
 
-
-%hook AWEUserDetailViewController
-//AWEProfileImagePreviewView
-- (void)viewDidLoad {
+%hook AWEProfileImagePreviewView
+UIButton *downloadImageButton;
+- (void)setupUI {
     %orig;
-    NSLog(@"You're in the USER detail Controller");
-    UILongPressGestureRecognizer *longPress = [[UILongPressGestureRecognizer alloc]
-                                               initWithTarget:self
-                                               action:@selector(downloadImageButtonPressed:)];
-    longPress.minimumPressDuration = 1.0;
-    [self.headerView.avatarView addGestureRecognizer:longPress];
+    downloadImageButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    [downloadImageButton addTarget:self action:@selector(downloadImageButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+
+    UIImage *downloadImage = [[[UIImage alloc] initWithCGImage:[UIImage imageNamed:@"icoLoginArrowNor@3x.png"].CGImage scale:1 orientation:UIImageOrientationRight] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+    
+    [downloadImageButton setBackgroundImage:downloadImage forState:UIControlStateNormal];
+    downloadImageButton.tintColor = [UIColor blackColor];
+
+    downloadImageButton.frame = CGRectMake(82.0, 205.0, 42.0, 42.0);
+    [self addSubview:downloadImageButton];
 }
 
-
 %new
-- (void)downloadImageButtonPressed:(UILongPressGestureRecognizer*)sender {
+- (void)downloadImageButtonPressed:(UIButton*)button {
     
-    if (sender.state == UIGestureRecognizerStateBegan) {
-        NSLog(@"Image download button tapped!");
-        UIImage *savedImage = self.headerView.avatarView.image;
-        
-        [[PHPhotoLibrary sharedPhotoLibrary] performChanges:^{
-            PHAssetChangeRequest *changeRequest = [PHAssetChangeRequest creationRequestForAssetFromImage:savedImage];
-            changeRequest.creationDate = [NSDate date];
-        } completionHandler:^(BOOL success, NSError *error) {
-            if (success) {
-                NSLog(@"successfully saved");
-            }
-            else {
-                NSLog(@"error saving to photos: %@", error);
-            }
-        }];
+    UIImage *savedImage = self.avatar.image;
+    
+    [[PHPhotoLibrary sharedPhotoLibrary] performChanges:^{
+        PHAssetChangeRequest *changeRequest = [PHAssetChangeRequest creationRequestForAssetFromImage:savedImage];
+        changeRequest.creationDate = [NSDate date];
+    } completionHandler:^(BOOL success, NSError *error) {
+        if (success) {
+            NSLog(@"successfully saved");
+        }
+        else {
+            NSLog(@"error saving to photos: %@", error);
 
-    } else if (sender.state == UIGestureRecognizerStateEnded) {
-        NSLog(@"Long press Ended");
-    }
+        }
+    }];
 }
 
 %end
