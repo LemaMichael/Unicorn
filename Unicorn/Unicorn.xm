@@ -33,7 +33,12 @@ static CGFloat initialConstant = 0;
 @interface AWEAdAvatarView : UIView
 @end
 
+@interface LOTAnimationView : UIView
+@end
+
 @interface AWEAwemePlayInteractionViewController : UIViewController
+@property(retain, nonatomic) UIView *liveMarkView; // The pink circle indicating user is live
+@property(retain, nonatomic) LOTAnimationView *followAnimationView; // The follow button on userAvatarView
 @property(retain, nonatomic) AWEAdAvatarView *userAvatarView;
 @property(retain, nonatomic) AWEFeedVideoButton *likeButton;
 @property(retain, nonatomic) AWEFeedVideoButton *commentButton;
@@ -87,12 +92,16 @@ bool rightButtonsHidden = false;
         NSLog(@"Long press detected.");
         rightButtonsHidden = !rightButtonsHidden;
         if (rightButtonsHidden) {
+            self.liveMarkView.hidden = YES;
+            self.followAnimationView.hidden = YES;
             self.userAvatarView.hidden = YES;
             self.likeButton.hidden = YES;
             self.commentButton.hidden = YES;
             self.shareButton.hidden = YES;
             self.downloadButton.hidden = YES;
         } else {
+            self.liveMarkView.hidden = NO;
+            self.followAnimationView.hidden = NO;
             self.userAvatarView.hidden = NO;
             self.likeButton.hidden = NO;
             self.commentButton.hidden = NO;
