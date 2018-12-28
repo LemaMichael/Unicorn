@@ -30,16 +30,8 @@ static CGFloat initialConstant = 0;
 @property(retain, nonatomic) AWEVideoModel* video;
 @end
 
-@interface AWEAdAvatarView : UIView
-@end
-
-@interface LOTAnimationView : UIView
-@end
-
 @interface AWEAwemePlayInteractionViewController : UIViewController
-@property(retain, nonatomic) UIView *liveMarkView; // The pink circle indicating user is live
-@property(retain, nonatomic) LOTAnimationView *followAnimationView; // The follow button on userAvatarView
-@property(retain, nonatomic) AWEAdAvatarView *userAvatarView;
+- (void)listSubviewsOfView:(UIView *)view;
 @property(retain, nonatomic) AWEFeedVideoButton *likeButton;
 @property(retain, nonatomic) AWEFeedVideoButton *commentButton;
 @property(nonatomic, retain) AWEFeedVideoButton *downloadButton; //NEW BUTTON
@@ -67,7 +59,7 @@ static CGFloat initialConstant = 0;
 
 
 %hook AWEAwemePlayInteractionViewController
-bool rightButtonsHidden = false;
+bool isFollowingViewsHidden = false;
 
 - (void)viewDidLoad {
     %orig;
@@ -85,23 +77,11 @@ bool rightButtonsHidden = false;
 {
     if (sender.state == UIGestureRecognizerStateBegan) {
         NSLog(@"Long press detected.");
-        rightButtonsHidden = !rightButtonsHidden;
-        if (rightButtonsHidden) {
-            self.liveMarkView.hidden = YES;
-            self.followAnimationView.hidden = YES;
-            self.userAvatarView.hidden = YES;
-            self.likeButton.hidden = YES;
-            self.commentButton.hidden = YES;
-            self.shareButton.hidden = YES;
-            self.downloadButton.hidden = YES;
+        isFollowingViewsHidden = !isFollowingViewsHidden;
+        if (isFollowingViewsHidden) {
+            self.view.alpha = 0.011;
         } else {
-            self.liveMarkView.hidden = NO;
-            self.followAnimationView.hidden = NO;
-            self.userAvatarView.hidden = NO;
-            self.likeButton.hidden = NO;
-            self.commentButton.hidden = NO;
-            self.shareButton.hidden = NO;
-            self.downloadButton.hidden = NO;
+            self.view.alpha = 1.0;
         }
     } else if (sender.state == UIGestureRecognizerStateEnded) {
         NSLog(@"Long press Ended");
@@ -309,11 +289,11 @@ int viewCounter = 0;
     
     viewCounter += 1;
     for (UIView *subview in subviews) {
-        NSLog(@"Counter: %d, %@", viewCounter, subview);
+        //NSLog(@"Counter: %d, %@", viewCounter, subview);
         
         // 9 or 10.
         if (viewCounter == 10) {
-            NSLog(@"CHANGING: %@", subview);
+            //NSLog(@"CHANGING: %@", subview);
             liveViews = subview;
         }
         // List the subviews of subview
