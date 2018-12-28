@@ -12,6 +12,15 @@
 - [x] FOLLOWING page enhancements (long Press screen for 1 second)
 - [ ] Your suggestions
 
+
+## Tools Used
+- [MonkeyDev](https://github.com/AloneMonkey/MonkeyDev) for creating Tweaks 
+
+- [REVEAL](https://revealapp.com) for view debugging 
+
+- [Class-Dump](http://stevenygard.com/projects/class-dump/) to generate header files
+
+
 ## Credit
 Special thanks to:
 - [opa334](https://github.com/opa334)  for the download [feature](https://github.com/opa334/Downloadally). 
