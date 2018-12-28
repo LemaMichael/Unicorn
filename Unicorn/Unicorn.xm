@@ -55,19 +55,14 @@ static CGFloat initialConstant = 0;
 @end
 
 
-//: NEW
-// This contains the message UITableView and AWELiveMessageListCellView
-@interface AWELiveChatMessageViewController: UIViewController
-@property(retain, nonatomic) UITableView *messageListView;
-- (void)viewDidLoad;
-@end
-
+//: LIVE Controllers
 @interface AWELiveInteractViewController : UIViewController
 @end
 
 @interface AWELiveAudienceViewController : AWELiveInteractViewController
 - (void)viewDidLoad;
 - (void)handleLongPress:(UILongPressGestureRecognizer*)sender;
+- (void)listSubviewsOfView:(UIView *)view;
 @end
 
 
@@ -131,7 +126,7 @@ bool rightButtonsHidden = false;
     
     //The icoLoginArrowNor image is an arrow facing to the right, so we can just rotate it downwards and reuse it
     UIImage *downloadImage = [[[UIImage alloc] initWithCGImage:[UIImage imageNamed:@"icoLoginArrowNor@3x.png"].CGImage scale:1 orientation:UIImageOrientationRight] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
-
+    
     [self.downloadButton setImage: downloadImage];
     self.downloadButton.tintColor = [UIColor whiteColor];
     
@@ -297,10 +292,49 @@ bool rightButtonsHidden = false;
 %end
 
 
-UIView *chatView;
 
 %hook AWELiveAudienceViewController
-bool isChatHidden = false;
+bool isLiveViewsHidden = false;
+UIView *liveViews;
+int viewCounter = 0;
+
+%new
+- (void)listSubviewsOfView:(UIView *)view {
+    
+    // Get the subviews of the view
+    NSArray *subviews = [view subviews];
+    
+    // Return if there are no subviews
+    if ([subviews count] == 0) return;
+    
+    viewCounter += 1;
+    for (UIView *subview in subviews) {
+        NSLog(@"Counter: %d, %@", viewCounter, subview);
+        
+        // 9 or 10.
+        if (viewCounter == 10) {
+            NSLog(@"CHANGING: %@", subview);
+            liveViews = subview;
+        }
+        // List the subviews of subview
+        [self listSubviewsOfView:subview];
+    }
+}
+
+%new
+- (void)handleLongPress:(UILongPressGestureRecognizer*)sender {
+    if (sender.state == UIGestureRecognizerStateBegan) {
+        NSLog(@"Long press detected.");
+        isLiveViewsHidden = !isLiveViewsHidden;
+        if (isLiveViewsHidden) {
+            liveViews.hidden = YES;
+        } else {
+            liveViews.hidden = NO;
+        }
+    } else if (sender.state == UIGestureRecognizerStateEnded) {
+        NSLog(@"Long press Ended");
+    }
+}
 
 - (void)viewDidLoad {
     %orig;
@@ -311,34 +345,8 @@ bool isChatHidden = false;
                                                action:@selector(handleLongPress:)];
     longPress.minimumPressDuration = 1.0;
     [self.view addGestureRecognizer:longPress];
-}
-
-%new
-- (void)handleLongPress:(UILongPressGestureRecognizer*)sender
-{
-    if (sender.state == UIGestureRecognizerStateBegan) {
-        NSLog(@"Long press detected.");
-        isChatHidden = !isChatHidden;
-        if (isChatHidden) {
-            //chatView.backgroundColor = [UIColor redColor];
-            chatView.hidden = YES;
-        } else {
-            //controller.messageListView.hidden = NO;
-            //chatView.backgroundColor = [UIColor blackColor];
-            chatView.hidden = NO;
-        }
-    } else if (sender.state == UIGestureRecognizerStateEnded) {
-        NSLog(@"Long press Ended");
-    }
+    
+    [self listSubviewsOfView: self.view];
+    viewCounter = 0;
 }
 %end
-
-
-%hook AWELiveChatMessageViewController
-- (void)viewDidLoad {
-    %orig;
-    chatView = self.view;
-}
-%end
-
-
