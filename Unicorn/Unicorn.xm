@@ -58,6 +58,32 @@ static CGFloat initialConstant = 0;
 @end
 
 
+
+// Download Profile Image
+@interface YYAnimatedImageView : UIImageView
+@end
+
+@interface AWEUserDetailHeaderView : UIView
+@property(retain, nonatomic) YYAnimatedImageView *avatarView;
+@end
+
+@interface AWEUserDetailViewController : UIViewController
+@property(retain, nonatomic) AWEUserDetailHeaderView *headerView;
+
+- (void)viewDidLoad;
+
+// NEW
+- (void)downloadImageButtonPressed:(UILongPressGestureRecognizer*)sender;
+@end
+
+
+// HM
+@interface AWEProfileImagePreviewView : UIView
+@property(retain, nonatomic) YYAnimatedImageView *avatar; // @synthesize avatar=_avatar;
+//@property(retain, nonatomic) AWEAnimatedButton *changeButton; // @synthesize changeButton=_changeButton;
+@end
+
+
 %hook AWEAwemePlayInteractionViewController
 bool isFollowingViewsHidden = false;
 
@@ -329,4 +355,45 @@ int viewCounter = 0;
     [self listSubviewsOfView: self.view];
     viewCounter = 0;
 }
+%end
+
+
+
+%hook AWEUserDetailViewController
+//AWEProfileImagePreviewView
+- (void)viewDidLoad {
+    %orig;
+    NSLog(@"You're in the USER detail Controller");
+    UILongPressGestureRecognizer *longPress = [[UILongPressGestureRecognizer alloc]
+                                               initWithTarget:self
+                                               action:@selector(downloadImageButtonPressed:)];
+    longPress.minimumPressDuration = 1.0;
+    [self.headerView.avatarView addGestureRecognizer:longPress];
+}
+
+
+%new
+- (void)downloadImageButtonPressed:(UILongPressGestureRecognizer*)sender {
+    
+    if (sender.state == UIGestureRecognizerStateBegan) {
+        NSLog(@"Image download button tapped!");
+        UIImage *savedImage = self.headerView.avatarView.image;
+        
+        [[PHPhotoLibrary sharedPhotoLibrary] performChanges:^{
+            PHAssetChangeRequest *changeRequest = [PHAssetChangeRequest creationRequestForAssetFromImage:savedImage];
+            changeRequest.creationDate = [NSDate date];
+        } completionHandler:^(BOOL success, NSError *error) {
+            if (success) {
+                NSLog(@"successfully saved");
+            }
+            else {
+                NSLog(@"error saving to photos: %@", error);
+            }
+        }];
+
+    } else if (sender.state == UIGestureRecognizerStateEnded) {
+        NSLog(@"Long press Ended");
+    }
+}
+
 %end
