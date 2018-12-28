@@ -7,8 +7,8 @@
 
 
 - [x] Download Videos
-- [x] Hide user messages during LIVE (long Press screen for 1 second)
-- [x] Hide LIKE, COMMENT and SHARE buttons in the FOLLOWING page (long Press screen for 1 second)
+- [x] LIVE enhancements (long Press screen for 1 second)
+- [x] FOLLOWING page enhancements (long Press screen for 1 second)
 - [ ] Your suggestions
 
 ## Credit
