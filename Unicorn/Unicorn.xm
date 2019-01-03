@@ -47,17 +47,6 @@ static CGFloat initialConstant = 0;
 @end
 
 
-//: LIVE Controllers
-@interface AWELiveInteractViewController : UIViewController
-@end
-
-@interface AWELiveAudienceViewController : AWELiveInteractViewController
-- (void)viewDidLoad;
-- (void)handleLongPress:(UILongPressGestureRecognizer*)sender;
-- (void)listSubviewsOfView:(UIView *)view;
-@end
-
-
 
 // Download Profile Image
 @interface YYAnimatedImageView : UIImageView
@@ -67,6 +56,41 @@ static CGFloat initialConstant = 0;
 @property(retain, nonatomic) YYAnimatedImageView *avatar;
 - (void)setupUI;
 - (void)downloadImageButtonPressed:(UIButton*)button; //NEW
+@end
+
+
+// LIVE TextView: Display's the user's text
+@interface AWETextViewInternal: UITextView
+@property(retain, nonatomic) NSString *placeholder;
+- (void)setText:(id)arg1;
+@end
+
+
+@interface AWEGrowingTextView : UIView <UITextViewDelegate>
+@property(retain, nonatomic) AWETextViewInternal *internalTextView;
+- (_Bool)textView:(id)arg1 shouldChangeTextInRange:(struct _NSRange)arg2 replacementText:(id)arg3;
+@end
+
+
+@interface AWELiveCommentInputView: UIView
+@property(retain, nonatomic) AWEGrowingTextView *textView;
+- (void)growingTextViewDidChange:(id)arg1;
+- (_Bool)growingTextViewShouldBeginEditing:(id)arg1;
+- (_Bool)growingTextView:(id)arg1 shouldChangeTextInRange:(struct _NSRange)arg2 replacementText:(id)arg3;
+@end
+
+
+//: LIVE Controllers
+@interface AWELiveInteractViewController : UIViewController 
+@property(retain, nonatomic) AWELiveCommentInputView *commentInputView;
+- (void)viewDidLoad;
+- (void)newChatButtonTapped:(UIButton*)button; //NEW
+@end
+
+@interface AWELiveAudienceViewController : AWELiveInteractViewController
+- (void)viewDidLoad;
+- (void)handleLongPress:(UILongPressGestureRecognizer*)sender;
+- (void)listSubviewsOfView:(UIView *)view;
 @end
 
 
@@ -349,13 +373,11 @@ UIButton *downloadImageButton;
 - (void)setupUI {
     %orig;
     downloadImageButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [downloadImageButton addTarget:self action:@selector(downloadImageButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
-
     UIImage *downloadImage = [[[UIImage alloc] initWithCGImage:[UIImage imageNamed:@"icoLoginArrowNor@3x.png"].CGImage scale:1 orientation:UIImageOrientationRight] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
-    
     [downloadImageButton setBackgroundImage:downloadImage forState:UIControlStateNormal];
     downloadImageButton.tintColor = [UIColor whiteColor];
-    
+    [downloadImageButton addTarget:self action:@selector(downloadImageButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+
     downloadImageButton.frame = CGRectMake(0, 114, 44, 44);
     [self addSubview: downloadImageButton];
 }
@@ -376,6 +398,94 @@ UIButton *downloadImageButton;
             NSLog(@"error saving to photos: %@", error);
         }
     }];
+}
+%end
+
+//  Main
+%hook AWELiveCommentInputView
+- (void)growingTextViewDidChange:(id)arg1 {
+    // Called when user types character
+    %orig;
+}
+- (_Bool)growingTextViewShouldBeginEditing:(id)arg1 {
+    // Called when bubble message is tapped
+    return %orig;
+}
+
+- (_Bool)growingTextView:(id)arg1 shouldChangeTextInRange:(struct _NSRange)arg2 replacementText:(id)arg3 {
+    // Don't modify this. It Won't send messages.
+    return %orig;
+}
+%end
+
+
+%hook AWEGrowingTextView
+- (_Bool)textView:(id)arg1 shouldChangeTextInRange:(struct _NSRange)arg2 replacementText:(id)arg3 {
+    %log;
+    //NSString *string = [[arg1 text] stringByReplacingCharactersInRange:arg2 withString:arg3];
+    //NSLog(@"%i", [string length]);
+    return %orig;
+}
+%end
+
+
+%hook AWELiveInteractViewController
+- (void)viewDidLoad {
+    %orig;
+    NSLog(@"AWELiveInteractViewController CALLED");
+    
+    /*
+     AWELiveInteractViewController: AWELiveCommentInputView *_commentInputView
+     AWELiveCommentInputView: AWEGrowingTextView *textView
+     AWEGrowingTextView: AWETextViewInternal *internalTextView
+     AWETextViewInternal: NSString *placeholder,
+     
+     // This is for testing. You can see the text can be set to over 50 characters.
+    self.commentInputView.textView.internalTextView.placeholder = @"TEST 123";
+    self.commentInputView.textView.internalTextView.text = @"123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263646566676869707172737475767778798081828384858687888990919293949596979899100123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263646566676869707172737475767778798081828384858687888990919293949596979899100123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263646566676869707172737475767778798081828384858687888990919293949596979899100123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263646566676869707172737475767778798081828384858687888990919293949596979899100123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263646566676869707172737475767778798081828384858687888990919293949596979899100123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263646566676869707172737475767778798081828384858687888990919293949596979899100123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263646566676869707172737475767778798081828384858687888990919293949596979899100123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263646566676869707172737475767778798081828384858687888990919293949596979899100123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263646566676869707172737475767778798081828384858687888990919293949596979899100123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263646566676869707172737475767778798081828384858687888990919293949596979899100123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263646566676869707172737475767778798081828384858687888990919293949596979899100123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263646566676869707172737475767778798081828384858687888990919293949596979899100🐶";
+    */
+    
+    // Adding New button
+    UIButton *newChatButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    UIImage *chatImage = [[UIImage imageNamed:@"ic_home_like_after.png"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+    [newChatButton setBackgroundImage:chatImage forState:UIControlStateNormal];
+    [newChatButton addTarget:self action:@selector(newChatButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
+
+    newChatButton.frame = CGRectMake(0, 0, 25, 25);
+    [self.commentInputView addSubview: newChatButton];
+}
+
+%new
+- (void)newChatButtonTapped:(UIButton*)button {
+    // When the heart button is tapped, bring up an alertController with a textfield.
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Type more than 50 Characters here" message:@"Tap Send after tapping Done" preferredStyle:UIAlertControllerStyleAlert];
+    
+    [alertController addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {
+        textField.autocorrectionType = UITextAutocorrectionTypeYes;
+        textField.autocapitalizationType = UITextAutocapitalizationTypeSentences;
+        textField.placeholder = @"Say something epic...";
+        
+        // Check if the user has typed something in the internalTextView.
+        if ( [self.commentInputView.textView.internalTextView.text length] != 0) {
+            textField.text = self.commentInputView.textView.internalTextView.text;
+        }
+    }];
+    
+    UIAlertAction *doneAction = [UIAlertAction actionWithTitle:@"Done" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        //NSLog(@"Chat message is %@", [[alertController textFields][0] text]);
+        self.commentInputView.textView.internalTextView.text = [[alertController textFields][0] text];
+        
+        // After the user taps Done, bring up the previous textView to send the message.
+        [self.commentInputView.textView.internalTextView becomeFirstResponder];
+    }];
+    
+    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+        //NSLog(@"Canelled");
+    }];
+    
+    [alertController addAction: doneAction];
+    [alertController addAction: cancelAction];
+    [self presentViewController:alertController animated:YES completion:nil];
 }
 
 %end
