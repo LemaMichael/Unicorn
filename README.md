@@ -9,6 +9,7 @@
 - [x] Download Videos
 - [x] Download User's Profile Image
 - [x] LIVE enhancements (long Press screen for 1 second)
+- [x] Type more than 50 characters in livestreams
 - [x] FOLLOWING page enhancements (long Press screen for 1 second)
 - [ ] Your suggestions
 
