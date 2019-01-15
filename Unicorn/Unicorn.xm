@@ -80,17 +80,62 @@ static CGFloat initialConstant = 0;
 @end
 
 
+
+@interface AWELiveRoomModel
+@property(nonatomic) _Bool inSandBox; // @synthesize inSandBox=_inSandBox;
+@property(nonatomic) long long coins; // @synthesize coins=_coins;
+@property(nonatomic) long long totalUserCount; // @synthesize totalUserCount=_totalUserCount;
+@property(nonatomic) long long diggCount; // @synthesize diggCount=_diggCount;
+@property(nonatomic) _Bool isRequestedCoverImage;
+- (id)initWithRoomID:(id)arg1;
+@end
+
 //: LIVE Controllers
 @interface AWELiveInteractViewController : UIViewController 
 @property(retain, nonatomic) AWELiveCommentInputView *commentInputView;
+@property(retain, nonatomic) AWELiveRoomModel *roomModel; // Room model
+
 - (void)viewDidLoad;
 - (void)newChatButtonTapped:(UIButton*)button; //NEW
+
 @end
 
 @interface AWELiveAudienceViewController : AWELiveInteractViewController
 - (void)viewDidLoad;
 - (void)handleLongPress:(UILongPressGestureRecognizer*)sender;
 - (void)listSubviewsOfView:(UIView *)view;
+@end
+
+
+@interface AWELiveGiftListCollectionViewCell : UICollectionViewCell
+@end
+
+@interface MTLModel : NSObject
+- (_Bool)validate:(id *)arg1;
+@end
+
+@interface AWEBaseApiModel : MTLModel
+@property(retain, nonatomic) NSString *statusMsg; // @synthesize statusMsg=_statusMsg;
+@property(retain, nonatomic) NSNumber *timestamp; // @synthesize timestamp=_timestamp;
+@property(retain, nonatomic) NSNumber *statusCode; // @synthesize statusCode=_statusCode;
+@property(retain, nonatomic) NSString *requestID; // @synthesize requestID=_requestID;
+
+- (_Bool)awe_validate:(id *)arg1;
+- (_Bool)awe_validateValue:(inout id *)arg1 forKey:(id)arg2 error:(out id *)arg3;
+- (void)_mergeAllPropertyKeysWithLogPassback:(id)arg1;
+- (void)mergeAllPropertyKeysWithLogPassback;
+- (void)_mergeAllPropertyKeysWithRequestId:(id)arg1;
+- (void)mergeAllPropertyKeysWithRequestId;
+@end
+
+@interface AWELivePresentModel : AWEBaseApiModel ///
+@property(nonatomic) long long coin; // @synthesize coin=_coin;
+- (id)copyWithZone:(struct _NSZone *)arg1;
+- (id)fakeIconName;
+- (_Bool)isFakePresent;
+- (_Bool)isVideoPresent;
+- (_Bool)isAwemePresent;
+- (_Bool)isResourcePresent;
 @end
 
 
@@ -433,6 +478,11 @@ UIButton *downloadImageButton;
 - (void)viewDidLoad {
     %orig;
     NSLog(@"AWELiveInteractViewController CALLED");
+    //Print the AWELiveRoomModel: Doesn;t work
+   // NSLog(@"Printing out RoomModel....");
+   // NSLog(@"isSandbox: %d, coins: %lld, totalUserCount: %lld, digCount: %lld", self.roomModel.inSandBox, self.roomModel.coins,  self.roomModel.totalUserCount, self.roomModel.diggCount);
+    //self.roomModel.coins = 999999999;
+   // NSLog(@"*******Finished Printing RoomModel********");
     
     /*
      AWELiveInteractViewController: AWELiveCommentInputView *_commentInputView
@@ -442,7 +492,7 @@ UIButton *downloadImageButton;
      
      // This is for testing. You can see the text can be set to over 50 characters.
     self.commentInputView.textView.internalTextView.placeholder = @"TEST 123";
-    self.commentInputView.textView.internalTextView.text = @"123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263646566676869707172737475767778798081828384858687888990919293949596979899100123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263646566676869707172737475767778798081828384858687888990919293949596979899100123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263646566676869707172737475767778798081828384858687888990919293949596979899100123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263646566676869707172737475767778798081828384858687888990919293949596979899100123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263646566676869707172737475767778798081828384858687888990919293949596979899100123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263646566676869707172737475767778798081828384858687888990919293949596979899100123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263646566676869707172737475767778798081828384858687888990919293949596979899100123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263646566676869707172737475767778798081828384858687888990919293949596979899100123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263646566676869707172737475767778798081828384858687888990919293949596979899100123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263646566676869707172737475767778798081828384858687888990919293949596979899100123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263646566676869707172737475767778798081828384858687888990919293949596979899100123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263646566676869707172737475767778798081828384858687888990919293949596979899100🐶";
+    self.commentInputView.textView.internalTextView.text = @"1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253545556575859606162636465666768697";
     */
     
     // Adding New button
@@ -488,4 +538,96 @@ UIButton *downloadImageButton;
     [self presentViewController:alertController animated:YES completion:nil];
 }
 
+%end
+
+
+@interface AWELiveSetting : NSObject
++ (void)setUserAllCoins:(long long)arg1;
++ (long long)userAllCoins;
+@end
+
+%hook AWELiveSetting
+// Called when app opens. Gets called when you enter a live room too, gets called when AWELiveGiftListViewController appears
++ (void)setUserAllCoins:(long long)arg1 {
+    /// important Changing arg1 will show change your coint ammount in the bottom
+    arg1 = 10000000;
+    //%orig (arg1);
+    %orig;
+}
+// This actually does something and lets you tap an icon. The original returned val is 0.
++ (long long)userAllCoins {
+    long long val = %orig;
+    return %orig;
+}
+%end
+
+
+@interface AWELiveGiftListDataController : NSObject
+- (void)sendPresent:(id)arg1 presentID:(id)arg2 count:(long long)arg3 completion:(id)arg4;
+@end
+
+%hook AWELiveGiftListDataController
+
+// This gets called when any gift is tapped or after _performSendRequest()
+- (void)sendPresent:(id)arg1 presentID:(id)arg2 count:(long long)arg3 completion:(id)arg4 {
+    // arg1: __NSCFNumber, arg2: __NSCFNumber,
+    // This is in control of the black notification that says "not enough coins" ignoring %orig will take care of that.
+    NSLog(@"sendPresent.. arg1: %@, arg2: %@, arg3: %lld", arg1, arg2, arg3);
+    //%orig;
+    %orig(arg1, arg2, arg3, NULL);
+    
+}
+%end
+
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////?
+// AWELiveSendGiftController
+@interface AWELiveSendGiftController : NSObject
+- (void)willSendGiftInCollectionView:(id)arg1 atIndexPath:(id)arg2;
+@end
+
+%hook AWELiveSendGiftController
+
+// IMPORTANT
+- (void)willSendGiftInCollectionView:(id)arg1 atIndexPath:(id)arg2 {
+    //arg1 is of type UICollectionView, arg2 is of type NSIndexPath
+    NSLog(@"willSendGiftInCollectionView: arg1: %@, arg2: %@", arg1, arg2);
+    //NSLog(@"willSendGiftInCollectionView: dataType arg1: %@, dataType: arg2: %@", NSStringFromClass([arg1 class]), NSStringFromClass([arg2 class]));
+    %orig;
+}
+%end
+
+
+@interface AWELiveFreePresentPropertyManager : NSObject
++ (id)sharedInstace;
+- (long long)freeCountForPresentId:(id)arg1;
+@end
+
+%hook AWELiveFreePresentPropertyManager
+
+// Gets called often, return val is 0. RETURNING 1 MAKES ALL GIFTS LABELED FREE.
+- (long long)freeCountForPresentId:(id)arg1 {
+    //return 1;
+    return %orig;
+}
+%end
+
+
+@interface AWELiveGiftListViewController : UIViewController
+- (void)collectionView:(id)arg1 didSelectItemAtIndexPath:(id)arg2;
+@property(retain, nonatomic) AWELiveSendGiftController *sendGiftController;
+@property(retain, nonatomic) AWELiveGiftListDataController *dataController;
+@end
+
+%hook AWELiveGiftListViewController
+
+// Called when cell for gifts are tapped
+- (void)collectionView:(id)arg1 didSelectItemAtIndexPath:(id)arg2 {
+    //%orig;
+    NSLog(@"didSelectItem");
+    /// THIS IS IMPORTANT:  This shows the animation.
+    //%orig;
+    [self.sendGiftController willSendGiftInCollectionView:arg1 atIndexPath:arg2]; //AWELiveSendGiftController
+
+}
 %end
