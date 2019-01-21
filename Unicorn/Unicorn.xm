@@ -27,74 +27,21 @@ static CGFloat initialConstant = 0;
 @end
 
 @interface MTLModel : NSObject
-@property(readonly) unsigned long long hash;
-@property(readonly, copy) NSString *description;
-@property(readonly, copy, nonatomic) NSDictionary *dictionaryValue;
-@property(readonly, copy) NSString *debugDescription;
-- (_Bool)validate:(id *)arg1;
 @end
 
 @interface AWEBaseApiModel : MTLModel
-@property(retain, nonatomic) NSDictionary *logPassback;
-@property(retain, nonatomic) NSString *statusMsg;
-@property(retain, nonatomic) NSNumber *timestamp;
-@property(retain, nonatomic) NSNumber *statusCode;
-@property(retain, nonatomic) NSString *requestID;
-
-@property(readonly, copy) NSString *debugDescription;
-@property(readonly, copy) NSString *description;
-
-- (_Bool)awe_validate:(id *)arg1;
-- (_Bool)awe_validateValue:(inout id *)arg1 forKey:(id)arg2 error:(out id *)arg3;
-- (void)_mergeAllPropertyKeysWithLogPassback:(id)arg1;
-- (void)mergeAllPropertyKeysWithLogPassback;
-- (void)_mergeAllPropertyKeysWithRequestId:(id)arg1;
-- (void)mergeAllPropertyKeysWithRequestId;
 @end
 
-
 @interface AWEAwemeStatusModel : AWEBaseApiModel
-@property(nonatomic) _Bool hasFusionGoods;
-@property(nonatomic) _Bool hasTaobaoGoods;
-@property(nonatomic) unsigned long long downloadType;
-@property(nonatomic) _Bool isProhibited;
-@property(nonatomic) _Bool isSelfSeeing;
-@property(nonatomic) _Bool isReviewed;
-@property(readonly, nonatomic) _Bool inReviewing;
-@property(nonatomic) unsigned long long privacyType;
-@property(readonly, nonatomic) _Bool allowComment;
-@property(readonly, nonatomic) _Bool allowShare;
-@property(readonly, nonatomic) _Bool deleted;
-@property(readonly, nonatomic) NSString *itemID;
-@property(readonly, nonatomic) _Bool isNotPublic;
-@property(readonly, nonatomic) _Bool isFriendVisible;
-@property(readonly, nonatomic) _Bool isPrivate;
-@property(nonatomic) _Bool hasGoods;
 @end
 
 @interface AWEAwemeStatisticsModel : AWEBaseApiModel
-@property(retain, nonatomic) NSNumber *commentCount;
-@property(retain, nonatomic) NSNumber *playCount;
 @end
 
 
 @interface AWEUserModel : AWEBaseApiModel
-@property(nonatomic) _Bool isGovMediaVip;
-@property(nonatomic) _Bool preventDownload;
-@property(nonatomic) _Bool isAcceptPrivatePolicy;
-
-@property(retain, nonatomic) NSArray *awemeItems;
-@property(retain, nonatomic) NSString *socialName;
 @property(nonatomic) long long downloadSetting;
-@property(nonatomic) long long commentSetting;
-@property(nonatomic) long long duetSetting;
-
-@property(nonatomic) _Bool privateAccount;
-
 @property(retain, nonatomic) NSString *birthday;
-@property(retain, nonatomic) NSString *alias;
-@property(retain, nonatomic) NSString *nickname;
-@property(readonly, nonatomic) NSString *shortID;
 @property(retain, nonatomic) NSString *userID;
 @property(retain, nonatomic) NSDate *createTime;
 @end
@@ -103,26 +50,13 @@ static CGFloat initialConstant = 0;
 @property(retain, nonatomic) AWEVideoModel* video;
 @property(retain, nonatomic) AWEAwemeStatusModel *status;
 @property(retain, nonatomic) NSNumber *accountScenario;
-@property(retain, nonatomic) NSArray *images;
-@property(copy, nonatomic) NSArray *topTagLabels;
-@property(copy, nonatomic) NSArray *tagLabels;
-@property(copy, nonatomic) NSArray *goodList;
-@property(retain, nonatomic) NSArray *videoLabels;
-@property(retain, nonatomic) NSArray *textExtras;
-@property(retain, nonatomic) NSArray *longVideo;
-@property(copy, nonatomic) NSArray *challengeList;
 @property(retain, nonatomic) AWEAwemeStatisticsModel *statistics;
-@property(copy, nonatomic) NSString *shareURL;
 @property(retain, nonatomic) AWEUserModel *author;
 @property(copy, nonatomic) NSString *descriptionString;
 @property(nonatomic) _Bool isCanPlay;
 @property(readonly, nonatomic) NSNumber *createTime;
-@property(nonatomic) _Bool isForbidComment;
-@property(nonatomic) _Bool isLawCriticalCountry;
-- (_Bool)disableComment;
 - (_Bool)canBeReposted;
 - (_Bool)videoCommentStauts;
-- (AWEAwemeModel *)init;
 @end
 
 @interface AWEAwemePlayInteractionViewController : UIViewController
@@ -163,26 +97,15 @@ static CGFloat initialConstant = 0;
 
 @interface AWEGrowingTextView : UIView <UITextViewDelegate>
 @property(retain, nonatomic) AWETextViewInternal *internalTextView;
-- (_Bool)textView:(id)arg1 shouldChangeTextInRange:(struct _NSRange)arg2 replacementText:(id)arg3;
 @end
 
 
 @interface AWELiveCommentInputView: UIView
 @property(retain, nonatomic) AWEGrowingTextView *textView;
-- (void)growingTextViewDidChange:(id)arg1;
-- (_Bool)growingTextViewShouldBeginEditing:(id)arg1;
-- (_Bool)growingTextView:(id)arg1 shouldChangeTextInRange:(struct _NSRange)arg2 replacementText:(id)arg3;
 @end
 
-
-
 @interface AWELiveRoomModel
-@property(nonatomic) _Bool inSandBox; // @synthesize inSandBox=_inSandBox;
-@property(nonatomic) long long coins; // @synthesize coins=_coins;
-@property(nonatomic) long long totalUserCount; // @synthesize totalUserCount=_totalUserCount;
-@property(nonatomic) long long diggCount; // @synthesize diggCount=_diggCount;
-@property(nonatomic) _Bool isRequestedCoverImage;
-- (id)initWithRoomID:(id)arg1;
+@property(nonatomic) long long coins;
 @end
 
 //: LIVE Controllers
@@ -202,13 +125,12 @@ static CGFloat initialConstant = 0;
 @end
 
 
-//: PROTOCOL
 @interface AWELiveGiftListCollectionViewCell : UICollectionViewCell
 @end
 
 
 
-@interface AWELivePresentModel : AWEBaseApiModel ///
+@interface AWELivePresentModel : AWEBaseApiModel
 @property(nonatomic) long long coin; // @synthesize coin=_coin;
 - (id)copyWithZone:(struct _NSZone *)arg1;
 - (id)fakeIconName;
@@ -535,31 +457,12 @@ UIButton *downloadImageButton;
 }
 %end
 
-//  Main
+//  Main text input view.
 %hook AWELiveCommentInputView
-- (void)growingTextViewDidChange:(id)arg1 {
-    // Called when user types character
-    %orig;
-}
-- (_Bool)growingTextViewShouldBeginEditing:(id)arg1 {
-    // Called when bubble message is tapped
-    return %orig;
-}
-
-- (_Bool)growingTextView:(id)arg1 shouldChangeTextInRange:(struct _NSRange)arg2 replacementText:(id)arg3 {
-    // Don't modify this. It Won't send messages.
-    return %orig;
-}
 %end
 
 
 %hook AWEGrowingTextView
-- (_Bool)textView:(id)arg1 shouldChangeTextInRange:(struct _NSRange)arg2 replacementText:(id)arg3 {
-    %log;
-    //NSString *string = [[arg1 text] stringByReplacingCharactersInRange:arg2 withString:arg3];
-    //NSLog(@"%i", [string length]);
-    return %orig;
-}
 %end
 
 
@@ -567,11 +470,6 @@ UIButton *downloadImageButton;
 - (void)viewDidLoad {
     %orig;
     NSLog(@"AWELiveInteractViewController CALLED");
-    //Print the AWELiveRoomModel: Doesn;t work
-    // NSLog(@"Printing out RoomModel....");
-    // NSLog(@"isSandbox: %d, coins: %lld, totalUserCount: %lld, digCount: %lld", self.roomModel.inSandBox, self.roomModel.coins,  self.roomModel.totalUserCount, self.roomModel.diggCount);
-    //self.roomModel.coins = 999999999;
-    // NSLog(@"*******Finished Printing RoomModel********");
     
     /*
      AWELiveInteractViewController: AWELiveCommentInputView *_commentInputView
@@ -630,63 +528,6 @@ UIButton *downloadImageButton;
 %end
 
 
-
-
-//: PROTOCOL
-%hook AWELiveSendGiftControllerDelegate
-- (void)viewDidLoad {
-    %orig;
-    NSLog(@"Inside viewDidLoad AWELiveSendGiftControllerDelegate");
-}
-- (void)handleLongPress:(UILongPressGestureRecognizer*)sender {
-    NSLog(@"Hangle longpress");
-    %orig;
-}
-- (void)listSubviewsOfView:(UIView *)view {
-    %orig;
-    NSLog(@"listSubviewsOfView..");
-}
-%end
-
-
-
-
-/*
- // Isn't Called?
- @interface AWELiveUserDiggModel : AWEBaseApiModel
- + (id)userJSONTransformer;
- + (id)topDiggJSONTransformer;
- + (id)JSONKeyPathsByPropertyKey;
- @property(nonatomic) long long coins; // @synthesize coins=_coins;
- @property(retain, nonatomic) NSArray *topDigg; // @synthesize topDigg=_topDigg;
- @property(nonatomic) long long totalDiggCount; // @synthesize totalDiggCount=_totalDiggCount;
- //@property(retain, nonatomic) AWEUserModel *user; // @synthesize user=_user;
- 
- @end
- 
- %hook AWELiveUserDiggModel
- + (id)userJSONTransformer {
- id val = %orig;
- NSLog(@"userJSONTransformer...");
- NSLog(@"%@", NSStringFromClass([val class]));
- return %orig;
- }
- 
- + (id)topDiggJSONTransformer {
- id val = %orig;
- NSLog(@"topDiggJSONTransformer...");
- NSLog(@"%@", NSStringFromClass([val class]));
- return %orig;
- }
- + (id)JSONKeyPathsByPropertyKey {
- id val = %orig;
- NSLog(@"JSONKeyPathsByPropertyKey...");
- NSLog(@"%@", NSStringFromClass([val class]));
- return %orig;
- }
- 
- %end
- */
 
 @interface AWEAppLiveSettingManager : NSObject
 + (_Bool)disableNewPayment;
@@ -799,7 +640,7 @@ UIButton *downloadImageButton;
 }
 // This actually does something and lets you tap an icon. The original returned val is 0.
 + (long long)userAllCoins {
-    long long val = %orig;
+    //long long val = %orig;
     // NSLog(@"userAllCoins: %lld", val);
     // long long modifiedVal = 10000000;
     // [self setBarrageCoins: modifiedVal];
@@ -832,52 +673,12 @@ UIButton *downloadImageButton;
 }
 %end
 
-/*
- @interface AWELiveSendPresentResponseModel : AWEBaseApiModel
- + (id)avatarPendantThumbJSONTransformer;
- + (id)avatarPendantMediumJSONTransformer;
- + (id)avatarPendantLargerJSONTransformer;
- + (id)JSONKeyPathsByPropertyKey;
- @property(nonatomic) long long userCoins; // @synthesize userCoins=_userCoins; ///!!
- @end
- 
- %hook AWELiveSendPresentResponseModel
- + (id)avatarPendantThumbJSONTransformer {
- id val = %orig;
- NSLog(@"avatarPendantThumbJSONTransformer...");
- NSLog(@"%@", NSStringFromClass([val class]));
- return %orig;
- }
- //
- + (id)avatarPendantMediumJSONTransformer {
- id val = %orig;
- NSLog(@"avatarPendantMediumJSONTransformer...");
- NSLog(@"%@", NSStringFromClass([val class]));
- return %orig;
- }
- + (id)avatarPendantLargerJSONTransformer {
- id val = %orig;
- NSLog(@"avatarPendantLargerJSONTransformer...");
- NSLog(@"%@", NSStringFromClass([val class]));
- return %orig;
- }
- // Called first time a gift is tapped. (only called once )
- + (id)JSONKeyPathsByPropertyKey {
- id val = %orig;
- NSLog(@"JSONKeyPathsByPropertyKey...");
- NSLog(@"%@", NSStringFromClass([val class]));
- return %orig;
- }
- %end
- */
-
-
 @interface AWELiveSendGiftPackage : NSObject
 - (void)resetWithPresent:(id)arg1;
-@property(copy, nonatomic) NSString *requestId; // @synthesize requestId=_requestId;
-@property(nonatomic) long long count; // @synthesize count=_count;
-@property(nonatomic) long long coins; // @synthesize coins=_coins;
-@property(nonatomic) long long pid; // @synthesize pid=_pid;
+@property(copy, nonatomic) NSString *requestId;
+@property(nonatomic) long long count;
+@property(nonatomic) long long coins;
+@property(nonatomic) long long pid;
 @end
 
 %hook AWELiveSendGiftPackage
@@ -891,121 +692,6 @@ UIButton *downloadImageButton;
     
     // Commenting this out ignnores the black notification
     %orig;
-}
-
-%end
-
-/*
- @interface AWELiveRoomTopUserListReponseModel : AWEBaseApiModel
- + (id)roomTopUserListJSONTransformer;
- + (id)JSONKeyPathsByPropertyKey;
- @property(retain, nonatomic) NSArray *roomTopUserList; // @synthesize roomTopUserList=_roomTopUserList;
- @property(retain, nonatomic) NSNumber *roomCoin; // @synthesize roomCoin=_roomCoin;
- @end
- 
- %hook AWELiveRoomTopUserListReponseModel
- // Called when user enters live room
- + (id)roomTopUserListJSONTransformer {
- id val = %orig;
- NSLog(@"roomTopUserListJSONTransformer...");
- NSLog(@"%@", NSStringFromClass([val class]));
- return %orig;
- }
- 
- // Called when user enters live room
- + (id)JSONKeyPathsByPropertyKey {
- id val = %orig;
- NSLog(@"JSONKeyPathsByPropertyKey...");
- NSLog(@"%@", NSStringFromClass([val class]));
- return %orig;
- }
- %end
- */
-
-
-
-/*
- // NOT CALLED?
- @interface AWELiveRoomTopUser : AWEBaseApiModel
- + (id)userInfoJSONTransformer;
- + (id)JSONKeyPathsByPropertyKey;
- @property(nonatomic) long long coin; // @synthesize coin=_coin;
- @property(retain, nonatomic) AWEUserModel *userInfo; // @synthesize userInfo=_userInfo;
- @end
- 
- %hook AWELiveRoomTopUser
- + (id)userInfoJSONTransformer {
- id val = %orig;
- NSLog(@"userInfoJSONTransformer...");
- NSLog(@"%@", NSStringFromClass([val class]));
- return %orig;
- }
- + (id)JSONKeyPathsByPropertyKey {
- id val = %orig;
- NSLog(@"JSONKeyPathsByPropertyKey...");
- NSLog(@"%@", NSStringFromClass([val class]));
- return %orig;
- }
- %end
- */
-
-
-%hook AWELiveRoomModel
-// return val is AWELiveRoomModel. This is called as soon as you enter a live room
-- (id)initWithRoomID:(id)arg1 {
-    // NSLog(@"initWithRoomID...coins: %lld", self.coins); //arg1 is of type __NSCFNumber
-    long long modifiedVal = 100000;
-    //self.coins = modifiedVal;
-    // NSLog(@"Setting coins: %lld", self.coins);
-    //[AWELiveRoomModel] inSandBox: 0, coins: 0, totalUserCount: 0, diggCount: 0, isRequestedCoverImage: 0
-    NSLog(@"[AWELiveRoomModel] inSandBox: %d, coins: %lld, totalUserCount: %lld, diggCount: %lld, isRequestedCoverImage: %d", self.inSandBox, self.coins, self.totalUserCount,self.diggCount, self.isRequestedCoverImage);
-    
-    return %orig;
-}
-%end
-
-////
-
-%hook AWELivePresentModel
-
-// Return type is AWELivePresentModel
-- (id)copyWithZone:(struct _NSZone *)arg1 {
-    id val = %orig;
-    // annoying
-    //NSLog(@"copyWithZone...coins: %lld", self.coin);
-    //NSLog(@"%@", NSStringFromClass([val class]));
-    return %orig;
-}
-- (id)fakeIconName {
-    id val = %orig;
-    NSLog(@"fakeIconName...coins: %lld", self.coin);
-    NSLog(@"%@", NSStringFromClass([val class]));
-    return %orig;
-}
-- (_Bool)isFakePresent {
-    bool val = %orig;
-    // annoying
-    //NSLog(@"isFakePresent: %d coins: %lld", val, self.coin);
-    return %orig;
-}
-- (_Bool)isVideoPresent {
-    bool val = %orig;
-    //NSLog(@"isVideoPresent: %d coins: %lld", val, self.coin);
-    return %orig;
-}
-// Gets called as app finishes launches: return val is true. This lists out the prices of each gift. Changing coin value is reflected in live room
-- (_Bool)isAwemePresent {
-    bool val = %orig;
-    //  NSLog(@"isAwemePresent: %d coins: %lld", val, self.coin);
-    //self.coin = 0;
-    return %orig;
-}
-// Gets called as app finishes launches: return val is true. This lists out the prices of each gift.
-- (_Bool)isResourcePresent {
-    bool val = %orig;
-    // NSLog(@"isResourcePresent: %d coins: %lld", val, self.coin);
-    // self.coin = 0;
-    return %orig;
 }
 %end
 
@@ -1061,10 +747,10 @@ UIButton *downloadImageButton;
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////?
 // AWELiveSendGiftController
 @interface AWELiveSendGiftController : NSObject
-@property(nonatomic) _Bool isDuringSendCollecting; // @synthesize isDuringSendCollecting=_isDuringSendCollecting;
-@property(nonatomic) _Bool isDuringClickCollecting; // @synthesize isDuringClickCollecting=_isDuringClickCollecting;
+@property(nonatomic) _Bool isDuringSendCollecting; 
+@property(nonatomic) _Bool isDuringClickCollecting;
 //@property(nonatomic) __weak id <AWELiveSendGiftControllerDelegate> delegate; // @synthesize delegate=_delegate;
-@property(retain, nonatomic) AWELiveGiftListDataController *dataController; // @synthesize dataController=_dataController;
+@property(retain, nonatomic) AWELiveGiftListDataController *dataController;
 @property(retain, nonatomic) AWELiveRoomModel *roomModel;
 - (_Bool)isAnchor;
 - (void)_performSendRequest;
@@ -1216,10 +902,8 @@ UIButton *downloadImageButton;
 
 - (void)_fetchGiftListDataAndReloadUI:(_Bool)arg1;
 @property(retain, nonatomic) AWELiveSendGiftController *sendGiftController; // hmm..!!
-@property(retain, nonatomic) AWELiveGiftListDataController *dataController; // @synthesize dataController=_dataController;
-@property(nonatomic, assign) id <AWELiveSendGiftControllerDelegate> delegate; //
-
-
+@property(retain, nonatomic) AWELiveGiftListDataController *dataController; 
+@property(nonatomic, assign) id <AWELiveSendGiftControllerDelegate> delegate;
 @end
 
 // Controllers for sending gifts
@@ -1227,15 +911,6 @@ UIButton *downloadImageButton;
 %hook AWELiveGiftListViewController
 - (void)viewDidLoad {
     %orig;
-    // Called when gift button tapped
-    NSLog(@"**********************");
-    NSLog(@"LiveGiftController viewDidLoad");
-    NSLog(@"coins: %lld, isSandBox: %d, totalUserCount: %lld, diggCount: %lld, isRequestedCoverImage: %d", self.sendGiftController.roomModel.coins, self.sendGiftController.roomModel.inSandBox, self.sendGiftController.roomModel.totalUserCount, self.sendGiftController.roomModel.diggCount,self.sendGiftController.roomModel.isRequestedCoverImage);
-    
-    //self.sendGiftController.roomModel.coins = 99999999;
-    //[self didFinishSendPresentRequestWithTotalCoins:500];
-    
-    NSLog(@"LiveGiftController Finished **********************");
 }
 - (void)refreshWalletCoins {
     %orig;
@@ -1304,46 +979,6 @@ UIButton *downloadImageButton;
 %end
 
 
-
-////
-
-/*
- // Prints out many times
- %hook AWEBaseApiModel
- - (_Bool)awe_validate:(id *)arg1 {
- bool val = %orig;
- NSLog(@"[AWEBaseApiModel awe_validate], arg1: %@, return val: %d", *arg1, val);
- return %orig;
- }
- 
- - (_Bool)awe_validateValue:(id *)arg1 forKey:(id)arg2 error:(id *)arg3 {
- bool val = %orig;
- NSLog(@"[AWEBaseApiModel awe_validateValue], arg1: %@, key: %@, error: %@, return val: %d", *arg1, arg2, *arg3, val);
- return %orig;
- }
- - (void)_mergeAllPropertyKeysWithLogPassback:(id)arg1 {
- // NSLog(@"[AWEBaseApiModel _mergeAllPropertyKeysWithLogPassback], arg1: %@", NSStringFromClass([arg1 class]));
- %orig;
- }
- 
- - (void)_mergeAllPropertyKeysWithRequestId:(id)arg1 {
- //NSLog(@"[AWEBaseApiModel _mergeAllPropertyKeysWithRequestId], arg1: %@", NSStringFromClass([arg1 class]));
- %orig;
- }
- %end
- */
-
-
-
-%hook MTLModel
-- (_Bool)validate:(id *)arg1 {
-    bool val = %orig;
-    NSLog(@"[MTLModel validate], arg1: %@, return val: %d", *arg1, val);
-    return %orig;
-}
-%end
-
-
 @interface AWELiveWalletManager : NSObject
 + (void)alertForNobalance:(id)arg1 triggerReason:(id)arg2;
 + (id)_getWalletWebURL:(_Bool)arg1;
@@ -1361,7 +996,7 @@ UIButton *downloadImageButton;
 }
 + (id)_getWalletWebURL:(_Bool)arg1 {
     //arg1 is true
-    id val = %orig;
+    //id val = %orig;
     //NSLog(@"[AWELiveWalletManager _getWalletWebURL], arg1: %d, return val: %@", arg1, val);
     return %orig;
 }
@@ -1487,7 +1122,7 @@ UIButton *downloadImageButton;
 
 // Called when download video button is tapped! returnValue is false
 - (_Bool)p_unreviewedVideoToLink:(long long)arg1 {
-    bool val = %orig;
+    //bool val = %orig;
     //NSLog(@"[AWEAwemeShareViewController] p_unreviewedVideoToLink, arg1: %lld, returnval: %d", arg1, val);
     return %orig;
 }
@@ -1650,7 +1285,6 @@ UIButton *downloadImageButton;
     AWEUserWorkCollectionViewCell *myCell = %orig;
     myCell.isMine = YES;
     myCell.model.author.downloadSetting = 0;
-    //NSLog(@"birthday: %@, nickname: %@, shortID: %@, userID: %@,  createTime: %@", myCell.model.author.birthday, myCell.model.author.nickname, myCell.model.author.shortID, myCell.model.author.userID, myCell.model.author.createTime);
     bdayText = myCell.model.author.birthday;
     
     //date formatter.
@@ -1696,18 +1330,9 @@ UIButton *downloadImageButton;
 
 - (void)viewDidLoad {
     %orig;
-    // fromHome: FALSE, isCurrentUser: FALSE. isCurrentUser returns true if you click your profile
     NSLog(@"AWEUserDetailViewController.. fromHome: %d, isCurrentUser: %d", self.postVC.fromHome, self.postVC.isCurrentUser);
-    //self.postVC.isCurrentUser = YES; // ALL user's videos have a view count of 0.
-    //self.postVC.fromHome = YES;
-    NSLog(@"dataManager: count: %f, array: %d, showDraft: %d, pageSize: %lld, MAXcuseror: %f, mincursor: %f , userID: %@", self.postVC.dataManager.count, [self.postVC.dataManager.localPosts count], self.postVC.dataManager.showDraft, self.postVC.dataManager.pageSize, self.postVC.dataManager.maxCursor, self.postVC.dataManager.minCursor, self.postVC.dataManager.userID);
-   // NSLog(@"isCleanFresh: %d, feedColumnType: %lld, isRequestOnAir: %d, loadmoreHasMore: %d, refreshHasMore: %d, filteredArrayCount: %d, dataArrayCount: %d, disableLoadmore: %d", self.postVC.dataManager.isCleanRefresh, self.postVC.dataManager.feedColumnType, self.postVC.dataManager.isRequestOnAir, self.postVC.dataManager.loadmoreHasMore, self.postVC.dataManager.refreshHasMore, [self.postVC.dataManager.filteredDataSource count], [self.postVC.dataManager.dataSource count], self.postVC.dataManager.disableLoadMore);
     //self.postVC.collectionView.backgroundColor = [UIColor redColor];
     
-    //NSLog(@"hooking to the AWEAwemeModel status... ");
-    //NSLog(@"hasFusionGoods: %d, hasTaobaoGoods: %d, downloadType: %lld, isProhibited: %d, isSelfSeeing: %d, isReviewed: %d, inReviewing: %d, privacyType: %lld, allowComment: %d, allowShare: %d, deleted: %d, itemID: %@, isNotPublic: %d, isFriendVisible: %d, isPrivate: %d, hasGoods: %d", self.model.status.hasFusionGoods, self.model.status.hasTaobaoGoods, self.model.status.downloadType, self.model.status.isProhibited, self.model.status.isSelfSeeing, self.model.status.isReviewed, self.model.status.inReviewing, self.model.status.privacyType, self.model.status.allowComment, self.model.status.allowShare, self.model.status.deleted, self.model.status.itemID, self.model.status.isNotPublic, self.model.status.isFriendVisible, self.model.status.isPrivate, self.model.status.hasGoods);
-    
-    //NSLog(@"privateAccount: %d, isGovMediaVip: %d, preventDownload: %d, isAcceptPrivatePolicy: %d", self.user.privateAccount, self.user.isGovMediaVip, self.user.preventDownload, self.user.isAcceptPrivatePolicy);
     // This will display the bday of the user!
     self.bdayLabel = [[UILabel alloc] initWithFrame:CGRectMake(40, 70, 100, 50)];
     self.bdayLabel.numberOfLines = 0;
@@ -2044,7 +1669,6 @@ UIButton *downloadImageButton;
 - (id)initWithDataController:(id)arg1 initialIndex:(long long)arg2 referString:(id)arg3 {
     //NSLog(@"initWithDataController...referString");
     //NSLog(@"arg1: %@, initialIndex: %lld, referString: %@", arg1, arg2, arg3);
-
     return %orig;
 }
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -2101,137 +1725,17 @@ UIButton *downloadImageButton;
 
 - (long long)contentModeForDefaultVideoCover;
 - (_Bool)isActive;
-- (id)getPlayModeWithAutoPlayMode; //
+- (id)getPlayModeWithAutoPlayMode;
 - (id)_getVideoPlayQualityParams;
 
 @end
 
-%hook AWEPlayVideoViewController
-- (void)viewDidLoad{
-    %orig;
-    NSLog(@"MAin player called");
-}
-
-- (void)player:(id)arg1 noVideoDataToDownloadForURL:(id)arg2 {
-    NSLog(@"noVideoDataToDownloadForURL, arg1: %@, arg2: %@", arg1, arg2);
-    %orig;
-}
-- (void)player:(id)arg1 didFinishVideoDataDownloadForURL:(id)arg2 {
-    NSLog(@"didFinishVideoDataDownloadForURL, arg1: %@, arg2: %@", arg1, arg2);
-    %orig;
-}
-- (void)player:(id)arg1 didChangeStallState:(long long)arg2 {
-    NSLog(@"didChangeStallState, arg1: %@, arg2: %lld", arg1, arg2);
-    %orig;
-}
-
-- (void)player:(id)arg1 playbackFailedWithError:(id)arg2 {
-    NSLog(@"playbackFailedWithError, arg1: %@, arg2: %@", arg1, arg2);
-    %orig;
-}
-- (void)player:(id)arg1 playbackFailedForURL:(id)arg2 error:(id)arg3 {
-    NSLog(@"playbackFailedForURL, arg1: %@, arg2: %@, error: %@", arg1, arg2, arg3);
-    %orig;
-}
-- (_Bool)_alertIfNotValid {
-    NSLog(@"_alertIfNotValid: %d", %orig);
-    return %orig;
-}
-
-- (_Bool)alertIfNotValid {
-    NSLog(@"alertIfNotValid: %d", %orig);
-    return %orig;
-}
-- (_Bool)videoShouldPlay {
-    NSLog(@"videoShouldPlay: %d", %orig);
-    return %orig;
-}
-
-- (void)observeValueForKeyPath:(id)arg1 ofObject:(id)arg2 change:(id)arg3 context:(void *)arg4 {
-    NSLog(@"observeValueForKeyPath, arg1: %@, object:%@, change: %@, context: %@", arg1, arg2, arg3, arg4);
-    %orig;
-}
-- (long long)contentModeForDefaultVideoCover {
-    NSLog(@"contentModeForDefaultVideoCover, return val: %lld", %orig);
-    return %orig;
-}
-- (_Bool)isActive {
-    NSLog(@"isActive, return val: %d", %orig);
-    return %orig;
-}
-
-- (id)getPlayModeWithAutoPlayMode {
-    NSLog(@"getPlayModeWithAutoPlayMode, return val: %@", %orig);
-    return %orig;
-}
-- (id)_getVideoPlayQualityParams {
-    NSLog(@"_getVideoPlayQualityParams, return val: %@", %orig);
-    return %orig;
-}
-%end
-
 
 
 @interface AWEAwemePlayVideoViewController : AWEPlayVideoViewController
-- (_Bool)videoShouldPlay;
-- (_Bool)alertIfNotValid;
-- (void)updatePlayerIfNeeded;
-
-- (_Bool)isAutoPlaying;
-- (long long)type;
-- (_Bool)pause;
-- (_Bool)stop;
-- (_Bool)play;
-- (void)viewDidLoad;
-
-
-- (void)player:(id)arg1 playbackFailedWithError:(id)arg2;
-- (void)playerWillLoopPlaying:(id)arg1;
-- (void)checkAdVideo;
-
-
 @end
 
 %hook AWEAwemePlayVideoViewController
-- (_Bool)videoShouldPlay {
-    //NSLog(@"videoShouldPlay? %d", %orig);
-    return %orig;
-}
-- (_Bool)alertIfNotValid {
-    //NSLog(@"alertIfNotValid? %d", %orig);
-    return %orig;
-}
-- (_Bool)pause {
-    //NSLog(@"pause? %d", %orig);
-    return %orig;
-}
-- (_Bool)stop {
-    //NSLog(@"stop? %d", %orig);
-    return %orig;
-}
-- (_Bool)play {
-    //NSLog(@"play? %d", %orig);
-    return %orig;
-}
-- (void)viewDidLoad {
-    %orig;
-}
-
-
-- (void)player:(id)arg1 playbackFailedWithError:(id)arg2 {
-    NSLog(@"playbackFailedWithError, player: %@, error: %@", arg1, arg2);
-    //
-    %orig;
-}
-- (void)playerWillLoopPlaying:(id)arg1 {
-   // NSLog(@"playerWillLoopPlaying");
-    %orig;
-    
-}
-- (void)checkAdVideo {
-    //NSLog(@"checkAdVideo");
-    %orig;
-}
 %end
 
 
@@ -2257,7 +1761,6 @@ UIButton *downloadImageButton;
 @end
 
 %hook AWELikeWorkViewController
-
 - (void)viewDidLoad {
     %orig;
 }
@@ -2266,14 +1769,12 @@ UIButton *downloadImageButton;
     AWEUserWorkCollectionViewCell *myCell = %orig;
     // This seems to be the date of the video made: myCell.model.createTime.
     myCell.model.isCanPlay = YES;
-    //NSLog(@"index: %d, descriptionString: %@, isLawCriticalCountry: %d", arg2.row, myCell.model.descriptionString, myCell.model.isLawCriticalCountry);
     return myCell;
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     NSLog(@"index: %d", indexPath.row);
     %orig;
-    //return;
 }
 %end
 
