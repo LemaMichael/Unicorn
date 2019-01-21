@@ -747,7 +747,7 @@ UIButton *downloadImageButton;
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////?
 // AWELiveSendGiftController
 @interface AWELiveSendGiftController : NSObject
-@property(nonatomic) _Bool isDuringSendCollecting; 
+@property(nonatomic) _Bool isDuringSendCollecting;
 @property(nonatomic) _Bool isDuringClickCollecting;
 //@property(nonatomic) __weak id <AWELiveSendGiftControllerDelegate> delegate; // @synthesize delegate=_delegate;
 @property(retain, nonatomic) AWELiveGiftListDataController *dataController;
@@ -1282,7 +1282,7 @@ UIButton *downloadImageButton;
 - (UICollectionViewCell *)collectionView:(UICollectionView *)arg1 cellForItemAtIndexPath:(NSIndexPath *)arg2 {
     //NSLog(@"Section: %d, Row: %d, cellType: %@", arg2.section, arg2.row, %orig);
     // Lets get the cell!
-    AWEUserWorkCollectionViewCell *myCell = %orig;
+    AWEUserWorkCollectionViewCell *myCell = (AWEUserWorkCollectionViewCell *)%orig;
     myCell.isMine = YES;
     myCell.model.author.downloadSetting = 0;
     bdayText = myCell.model.author.birthday;
@@ -1634,7 +1634,7 @@ UIButton *downloadImageButton;
     %orig;
 }
 - (void)preloadCoverImageWithIndexPath:(NSIndexPath *)arg1 {
-   NSLog(@"preloadCoverImageWithIndexPath, Section: %d, Row: %d", arg1.section, arg1.row);
+   NSLog(@"preloadCoverImageWithIndexPath, Section: %ld, Row: %ld", arg1.section, arg1.row);
     %orig;
 }
 
@@ -1672,7 +1672,7 @@ UIButton *downloadImageButton;
     return %orig;
 }
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-    AWEAwemeDetailTableViewCell *myCell = %orig;
+    AWEAwemeDetailTableViewCell *myCell = (AWEAwemeDetailTableViewCell *)%orig;
     myCell.viewController.isValid = YES;
     //NSLog(@"isValid: %d, isInteracting: %d", myCell.viewController.isValid, [myCell.viewController.interactionController isInteracting] );
     return myCell;
@@ -1766,14 +1766,14 @@ UIButton *downloadImageButton;
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)arg1 cellForItemAtIndexPath:(NSIndexPath *)arg2 {
-    AWEUserWorkCollectionViewCell *myCell = %orig;
+    AWEUserWorkCollectionViewCell *myCell = (AWEUserWorkCollectionViewCell *)%orig;
     // This seems to be the date of the video made: myCell.model.createTime.
     myCell.model.isCanPlay = YES;
     return myCell;
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
-    NSLog(@"index: %d", indexPath.row);
+    NSLog(@"index: %ld", indexPath.row);
     %orig;
 }
 %end
