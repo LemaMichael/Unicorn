@@ -1806,5 +1806,20 @@ UIButton *downloadImageButton;
 }
 %end
 
+/*
+ _       _________          _______
+ ( \      \__   __/|\     /|(  ____ \
+ | (         ) (   | )   ( || (    \/
+ | |         | |   | |   | || (__
+ | |         | |   ( (   ) )|  __)
+ | |         | |    \ \_/ / | (
+ | (____/\___) (___  \   /  | (____/\
+ (_______/\_______/   \_/   (_______/
+ - Display the "live" option when the + button is tapped at the Tab Bar. 
+ */
 
-
+%hook AWEVideoRecorderController
+- (_Bool)shouldEnableLive {
+    return YES;
+}
+%end
