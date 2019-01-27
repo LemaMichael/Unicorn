@@ -1,8 +1,8 @@
 Package: com.lema.Unicorn
 Name: Unicorn
-Version: 0.1-1
-Description: 
-Section: System
+Version: 1.0
+Description: Tweak for TikTok. Download Videos and LIVE enhancements. Opened Sourced: https://github.com/LemaMichael/Unicorn
+Section: Tweaks
 Depends: firmware (>= 5.0), mobilesubstrate
 Conflicts: 
 Replaces: 
