@@ -9,9 +9,9 @@
 - [x] Download Videos
 - [x] Download User's Profile Image
 - [x] LIVE enhancements (long Press screen for 1 second)
-- [x] Type more than 50 characters in livestreams
+- [x] Type more than 50 characters in live streams
 - [x] FOLLOWING page enhancements (long Press screen for 1 second)
-- [x] Display all gift prizes in livestreams 
+- [x] Display all gift prizes in live streams 
 - [x] Show date created to each video in LIKED feed
 - [x] Display all user's birthday and the date the account was made in user's profile view
 - [x] View "private" or "under review" videos in LIKED feed.
