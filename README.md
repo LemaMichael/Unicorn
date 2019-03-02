@@ -1,9 +1,14 @@
 # Unicorn 🦄
+<p align="left">
+  <img src = "/Demo/Unicorn@2x.png"> 
+</p>
+
+
 [Why?](https://www.theverge.com/2018/10/26/18026250/bytedance-china-tiktok-valuation-highest-toutiao)
 
 ***Supports iOS 10 & 11***
 
-***Tested on TikTok version 9.6.2***
+***Tested on TikTok version 9.6.2 - 10.0.0***
 
 
 - [x] Download Videos
@@ -17,6 +22,10 @@
 - [x] View "private" or "under review" videos in LIKED feed.
 - [ ] Your suggestions
 
+# Updated List
+<p align="left">
+  <img src = "/Demo/UpdatedDemo.gif" height = "550"> 
+</p>
 
 ## Tools Used
 - [MonkeyDev](https://github.com/AloneMonkey/MonkeyDev) for creating Tweaks 
