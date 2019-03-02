@@ -296,8 +296,9 @@ bool isFollowingViewsHidden = false;
                                                                      style:UIAlertActionStyleDefault
                                                                    handler:^(UIAlertAction* action)
                                              {
-                                                 [[UIApplication sharedApplication]
-                                                  openURL:[NSURL URLWithString:UIApplicationOpenSettingsURLString]];
+                                                 UIApplication *application = [UIApplication sharedApplication];
+                                                 [application openURL:[NSURL URLWithString:UIApplicationOpenSettingsURLString]] options:@{} completionHandler:nil];
+
                                              }];
             
             [permissionAlert addAction:cancelAction];
