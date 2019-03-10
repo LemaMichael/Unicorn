@@ -21,7 +21,7 @@
 - [ ] Your suggestions
 
 # Updated List
-![Unicorn gif-w550](https://github.com/LemaMichael/Unicorn/blob/master/Demo/UpdatedDemo.gif?raw=true)
+<img src= "https://github.com/LemaMichael/Unicorn/blob/master/Demo/UpdatedDemo.gif?raw=true" height= 550>
 
 ## Tools Used
 - [MonkeyDev](https://github.com/AloneMonkey/MonkeyDev) for creating Tweaks 
