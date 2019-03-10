@@ -1,7 +1,5 @@
 # Unicorn 🦄
-<p align="left">
-  <img src = "/Demo/Unicorn@2x.png"> 
-</p>
+![Unicorn Icon](https://raw.githubusercontent.com/LemaMichael/Unicorn/master/Demo/Unicorn%402x.png)
 
 
 [Why?](https://www.theverge.com/2018/10/26/18026250/bytedance-china-tiktok-valuation-highest-toutiao)
@@ -23,9 +21,7 @@
 - [ ] Your suggestions
 
 # Updated List
-<p align="left">
-  <img src = "/Demo/UpdatedDemo.gif" height = "550"> 
-</p>
+![Unicorn gif-w550](https://github.com/LemaMichael/Unicorn/blob/master/Demo/UpdatedDemo.gif?raw=true)
 
 ## Tools Used
 - [MonkeyDev](https://github.com/AloneMonkey/MonkeyDev) for creating Tweaks 
