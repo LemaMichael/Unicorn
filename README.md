@@ -30,7 +30,7 @@
 
 - [Class-Dump](http://stevenygard.com/projects/class-dump/) to generate header files
 
-- [Charles](https://www.charlesproxy.com) for viewing https responses
+- [Charles](https://www.charlesproxy.com) for viewing HTTPS responses
 
 
 ***Submitted to BigBoss Repository***
