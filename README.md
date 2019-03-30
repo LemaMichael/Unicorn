@@ -30,6 +30,8 @@
 
 - [Class-Dump](http://stevenygard.com/projects/class-dump/) to generate header files
 
+- [Charles](https://www.charlesproxy.com) for viewing https responses
+
 
 ***Submitted to BigBoss Repository***
 
@@ -37,9 +39,4 @@
 ## Credit
 Special thanks to:
 - [opa334](https://github.com/opa334)  for the download [feature](https://github.com/opa334/Downloadally). 
-
-
-
-
-
 
