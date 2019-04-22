@@ -6,7 +6,7 @@
 
 ***Supports iOS 10 & 11***
 
-***Tested on TikTok version 9.6.2 - 10.0.0***
+***Tested on TikTok version 9.6.2 - 10.9.0***
 
 
 - [x] Download Videos
